@@ -11,8 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
         <jsp:useBean id="login" class="uta.cse4361.beans.LogInBean"/> 
-        <jsp:setProperty name="login" property="email" value="<%=request.getParameter("username")%>" />
-        <jsp:setProperty name="login" property="password" value="<%=request.getParameter("password")%>" />
+        <jsp:setProperty name="login" property="email" value='<%=request.getParameter("username")%>' />
+        <jsp:setProperty name="login" property="password" value='<%=request.getParameter("password")%>' />
     </head>
     <body>
          <jsp:include page="navigationbar.jsp" />

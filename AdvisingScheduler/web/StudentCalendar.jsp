@@ -145,7 +145,7 @@
                                             String result = newAppt.scheduleAppointment(); 
 
                                             if(result==""){
-                                                newAppt.sendEmail(newAppt.generateStudentMessage(), newAppt.getStudentEmail());
+//                                                newAppt.sendEmail(newAppt.generateStudentMessage(), newAppt.getStudentEmail());
                                                 //newAppt.sendEmail(newAppt.generateAdvisorMessage(), );
                                                 response.sendRedirect("AppointmentDetails.jsp");
                                             }

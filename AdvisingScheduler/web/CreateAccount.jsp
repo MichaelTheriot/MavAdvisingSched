@@ -11,21 +11,21 @@
         <%
             //Uncomment when there's a proper way to create an admin account
                 //this code redirects anyone who is not an admin back to the index page
-//            int rank = -1;
-//            int sessionid = -1;
-//            if ((session.getAttribute("id") == null) || (session.getAttribute("rank") == null)) {
-//               response.sendRedirect("index.jsp");
-//            }
-//            if (!(session.getAttribute("id") == null)) {
-//                    sessionid = Integer.parseInt((String) session.getAttribute("id"));
-//                }
-//                if (!(session.getAttribute("rank") == null)) {
-//                    rank = Integer.parseInt((String) session.getAttribute("rank"));
-//            }
-//            if(rank != 1)
-//                {
-//                    response.sendRedirect("index.jsp");
-//                }
+            int rank = -1;
+            int sessionid = -1;
+            if ((session.getAttribute("id") == null) || (session.getAttribute("rank") == null)) {
+               response.sendRedirect("index.jsp");
+            }
+            if (!(session.getAttribute("id") == null)) {
+                    sessionid = Integer.parseInt((String) session.getAttribute("id"));
+                }
+                if (!(session.getAttribute("rank") == null)) {
+                    rank = Integer.parseInt((String) session.getAttribute("rank"));
+            }
+            if(rank != 1)
+                {
+                    response.sendRedirect("index.jsp");
+                }
         %>
         <script type="text/javascript">
             function validate() {
