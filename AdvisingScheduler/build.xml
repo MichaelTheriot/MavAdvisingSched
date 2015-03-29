@@ -70,7 +70,7 @@
     -->
     <property environment="env" />
     
-    <property name="cobertura.dir" value="C:\cobertura-2.0.3" />
+    <property name="cobertura.dir" value="lib\cobertura-2.0.3" />
 
     <path id="cobertura.classpath">
         <fileset dir="${cobertura.dir}">
