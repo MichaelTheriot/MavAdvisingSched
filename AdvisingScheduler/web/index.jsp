@@ -33,7 +33,7 @@ and open the template in the editor.
                             rank = Integer.parseInt((String)session.getAttribute("rank"));
                         }
              %>
-            <table class='centerthis' style='margin: 0 auto;'>
+            <table class="centerthis" style='margin: 0 auto;'>
                 <tr>
                     <%
                             if(rank == -1){
@@ -41,7 +41,7 @@ and open the template in the editor.
                             }
                             %>
                     <div id='leftAccordion'>
-                       
+                        <a href="index.jsp"><img class="centerthis" src="css/images/horse-lord.png"></a>
                         <h3>Faculty</h3>
                         <div>
                             <%
@@ -66,6 +66,7 @@ and open the template in the editor.
                                 out.print("</td>"
                                         + "<td style='width: 640px'>"
                                         + "<div id='rightAccordion'>"
+                                        + "<a href='index.jsp'><img class='centerthis' src='css/images/utA.png'></a>"
                                         + "<h3>Student</h3>"
                                         + "<div>"
                                         + "Would you like to schedule an appointment with an advisor?<br><br>"

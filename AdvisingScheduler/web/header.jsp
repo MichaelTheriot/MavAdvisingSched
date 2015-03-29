@@ -13,6 +13,6 @@
         <link rel="shortcut icon" href="css/images/favicon.ico" type="image/x-icon" /> 
         
     <header>
-        <a href ="index.jsp"><img src="css/images/banner.png"></a>
+        <a href="index.jsp"><img class="centerthis" src="css/images/dept.png"></a>
     </header>
 
