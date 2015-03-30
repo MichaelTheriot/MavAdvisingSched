@@ -282,7 +282,7 @@ public class DatabaseManagerTest extends BasicJDBCTestCaseAdapter{
     {
         prepareResultSet();
         DatabaseManager dbmgr = new DatabaseManager();
-        String result = dbmgr.modifySlot(new Date(System.currentTimeMillis()), 8, 9, 0, 30);
+        String result = dbmgr.modifySlot(new Date(System.currentTimeMillis()), 8, 9, 0, 30, 0);
         verifySQLStatementExecuted("DELETE FROM SLOT");
         assertEquals("", result);
     }

@@ -23,7 +23,7 @@ public class ModifyTimeSlotsBeanTest extends BasicJDBCTestCaseAdapter implements
     @Test
     public void testModifySlot()
     {
-        ModifyTimeSlotsBean instance = new ModifyTimeSlotsBean(8, 9, 0, 30, new Date(System.currentTimeMillis()));
+        ModifyTimeSlotsBean instance = new ModifyTimeSlotsBean(8, 9, 0, 30, new Date(System.currentTimeMillis()), 0);
         String result = instance.modifySlot();
         verifySQLStatementExecuted("DELETE FROM \"SLOT\"");
         assertEquals(SUCCESS_MESSAGE, result);

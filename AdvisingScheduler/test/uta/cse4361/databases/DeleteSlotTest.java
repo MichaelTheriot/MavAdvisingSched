@@ -54,7 +54,7 @@ public class DeleteSlotTest extends BasicJDBCTestCaseAdapter{
         SaveSlots saveInstance = new SaveSlots(slots);
         saveInstance.execute();
         verifySQLStatementExecuted("INSERT INTO SLOT");
-        DeleteSlot deleteInstance = new DeleteSlot(new Date(System.currentTimeMillis()), 8, 9, 0, 30); // 
+        DeleteSlot deleteInstance = new DeleteSlot(new Date(System.currentTimeMillis()), 8, 9, 0, 30, 0); // 
         deleteInstance.execute();
         verifySQLStatementExecuted("DELETE FROM SLOT");
     }
@@ -75,7 +75,7 @@ public class DeleteSlotTest extends BasicJDBCTestCaseAdapter{
         SaveSlots saveInstance = new SaveSlots(slots);
         saveInstance.execute();
         verifySQLStatementExecuted("INSERT INTO SLOT");
-        DeleteSlot deleteInstance = new DeleteSlot(new Date(System.currentTimeMillis()), 8, 9, 0, 30); // 
+        DeleteSlot deleteInstance = new DeleteSlot(new Date(System.currentTimeMillis()), 8, 9, 0, 30, 0); // 
         deleteInstance.execute();
         verifySQLStatementNotExecuted("DELETE FROM SLOT");
     }
