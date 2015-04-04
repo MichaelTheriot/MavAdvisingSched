@@ -13,6 +13,9 @@
                 <li class="home">
                     <a href="index.jsp" >Home</a>
                 </li>
+                <li class="create-account">
+                    <a href="CreateAccount.jsp" >Create Account</a>
+                </li>
     <%
         if(session.getAttribute("rank") == null)
         {

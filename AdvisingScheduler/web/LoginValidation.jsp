@@ -15,7 +15,7 @@
         <jsp:setProperty name="login" property="password" value='<%=request.getParameter("password")%>' />
     </head>
     <body>
-         <jsp:include page="navigationbar.jsp" />
+        <jsp:include page="navigationbar.jsp" />
         <div id="wrapper">
             <jsp:include page="header.jsp" />
             <div id="accordion">
