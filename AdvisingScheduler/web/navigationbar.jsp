@@ -51,7 +51,7 @@
         }
     %>                
             </ul>
-            <span class="nav-date">
+            <!--<span class="nav-date">
                     <%= new java.util.Date()%>
-                </span>
+                </span> -->
         </div>
