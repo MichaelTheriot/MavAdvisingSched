@@ -36,7 +36,10 @@
                         + "</li>");
             }
             if (rank == 1 || rank == 0){
-                out.print("<li class='logout'>"
+                out.print("<li class='update-password'>"
+                        + "<a href='updatePassword.jsp'>Update Password</a>"
+                        + "</li>"
+                        + "<li class='logout'>"
                         + "<a href='logout.jsp' >Log Out</a>"
                         + "</li>");
             }

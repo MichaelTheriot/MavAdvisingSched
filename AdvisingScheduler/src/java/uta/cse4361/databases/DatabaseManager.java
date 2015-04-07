@@ -81,6 +81,10 @@ public class DatabaseManager {
     public String validate(String email, String password){
         return imp.validate(email, password);
     }
+
+    public String update(String email, String oldPassword, String newPassword){
+        return imp.update(email, oldPassword, newPassword);
+    }
     
     //todo
     public AdvisorAccount getAccount(String email){
