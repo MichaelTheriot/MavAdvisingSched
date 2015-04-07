@@ -11,7 +11,7 @@ import uta.cse4361.interfaces.Constants;
 
 /**
  *
- * @author Nabin
+ * @author Michael Theriot
  */
 public class UpdateBean implements Constants{
     private String email= null;
