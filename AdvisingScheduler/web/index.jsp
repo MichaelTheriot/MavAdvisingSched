@@ -43,10 +43,10 @@ and open the template in the editor.
                     <div id='leftAccordion'>
                         <a href="index.jsp"><img class="centerthis" src="css/images/horse-lord.png"></a>
                         <h3>Faculty</h3>
-                        <div>
+                        <h4>
                             <%
                             if (rank == -1){
-                                out.print("Would you like to check on your current schedule?<br><br>"
+                                out.print("Would you like to check on your current schedule?</h4>"
                                         + " <input type='submit' value='Login to your account' id='loginBtn' class='btn btn-default'>"
                                         );
                             }
@@ -57,8 +57,6 @@ and open the template in the editor.
                                 out.print("Welcome faculty member.");
                             }
                             %>
-                  
-                        </div>
 
                     </div>
                             <%
@@ -68,8 +66,8 @@ and open the template in the editor.
                                         + "<div id='rightAccordion'>"
                                         + "<a href='index.jsp'><img class='centerthis' src='css/images/utA.png'></a>"
                                         + "<h3>Student</h3>"
-                                        + "<div>"
-                                        + "Would you like to schedule an appointment with an advisor?<br><br>"
+                                        + "<h4>"
+                                        + "Would you like to schedule an appointment with an advisor?</h4>"
                                         + "<form action='schedule.jsp'>"
                                         + "<input type='submit' value='Make an appointment' id='scheduleBtn' class='btn btn-default'>"
                                         + "</form>"
