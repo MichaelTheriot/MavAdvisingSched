@@ -72,7 +72,7 @@ CREATE TABLE USER( UserID INTEGER NOT NULL AUTO_INCREMENT,
 -- );
 
 INSERT INTO USER (UserEmail, UserPassword, UserName, UserDepartment, UserRank) 
-VALUES ('admin@mavs.uta.edu', '92668751', 'Admin', 'CSE', 1);
+VALUES ('admin@mavs.uta.edu', '-1147882540', 'Admin', 'CSE', 1); -- password is test1234
 
 CREATE VIEW APPTFW AS
 SELECT ApptID, ApptDate, ApptStartHour, ApptStartMin, ApptEndHour, ApptEndMin
