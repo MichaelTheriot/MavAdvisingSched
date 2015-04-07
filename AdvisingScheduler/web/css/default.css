@@ -97,7 +97,7 @@ header{
 .centerthis{
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
+    text-align: center; 
     display: block;
 }
 
