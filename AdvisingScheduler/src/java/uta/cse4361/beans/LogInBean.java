@@ -23,8 +23,6 @@ public class LogInBean implements Constants{
     public String LogIn(){
         String Msg = SUCCESS_MESSAGE;
         DatabaseManager DM = new DatabaseManager();
-        System.out.println(this.email);
-        System.out.println(this.password);
         Msg = DM.validate(this.email, this.password);           
         return Msg;
     }
