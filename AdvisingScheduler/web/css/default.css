@@ -38,7 +38,6 @@ body {
 
 header{
     width: 1280px;
-    height: 65px;
     margin: 0 auto;
     display:inline-block;
     background-repeat: no-repeat;
@@ -98,7 +97,7 @@ header{
 .centerthis{
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
+    text-align: center; 
     display: block;
 }
 
