@@ -114,7 +114,14 @@ public class RelationalDatabaseImpl implements DatabaseImpInterface{
         validate.execute();
         return (String)validate.getResult();
     }
-    
+
+    @Override
+    public String update(String email, String oldPassword, String newPassword){
+        RDBImplCommand validate = new UpdatePassword(email, oldPassword, newPassword);
+        validate.execute();
+        return (String)validate.getResult();
+    }
+
     @Override
     public AdvisorAccount getAccount(String email){
         RDBImplCommand getAccount = new GetAdvisor(email);
