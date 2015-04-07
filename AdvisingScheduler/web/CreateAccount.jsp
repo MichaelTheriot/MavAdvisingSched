@@ -15,17 +15,17 @@
             int sessionid = -1;
             if ((session.getAttribute("id") == null) || (session.getAttribute("rank") == null)) {
                response.sendRedirect("index.jsp");
-            }
-            if (!(session.getAttribute("id") == null)) {
+            } else {
+                if (!(session.getAttribute("id") == null)) {
                     sessionid = Integer.parseInt((String) session.getAttribute("id"));
                 }
                 if (!(session.getAttribute("rank") == null)) {
                     rank = Integer.parseInt((String) session.getAttribute("rank"));
-            }
-            if(rank != 1)
-                {
+                }
+                if(rank != 1) {
                     response.sendRedirect("index.jsp");
                 }
+            }
         %>
         <script type="text/javascript">
             function validate() {
