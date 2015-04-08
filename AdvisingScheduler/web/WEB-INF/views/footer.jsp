@@ -19,6 +19,7 @@
         <script type="text/javascript" src="js/jquery.timepicker.js"></script>
         <script type="text/javascript" src= "js/bootstrap.js"></script>
         <script type="text/javascript" src= "js/bootbox.js"></script>
+        <script type="text/javascript" src="js/accordion.js"></script>
         <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
     </footer>
 </div>

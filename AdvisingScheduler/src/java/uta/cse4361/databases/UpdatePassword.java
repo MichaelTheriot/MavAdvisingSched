@@ -35,13 +35,13 @@ public class UpdatePassword extends RDBImplCommand {
         } catch(SQLException e){
             System.out.println("UpdatePassword Failed");
             conn.close();
-            result = "Invalid password";
+            result = "Invalid password provided.";
         } finally {
             statement.close();
             if(rows > 0) {
-                result = "Password updated";
+                result = "Password updated successfully.";
             } else {
-                result = "Invalid password";
+                result = "Invalid password provided.";
             }
         }
     }

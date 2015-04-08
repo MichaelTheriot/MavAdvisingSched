@@ -16,5 +16,6 @@
             template = "advisorFront";
             break;
     }
+    template = "/WEB-INF/templates/" + template + ".jsp";
 %>
-<jsp:include page='/WEB-INF/templates/<%= template %>' />
+<jsp:include page="<%= template %>" />
