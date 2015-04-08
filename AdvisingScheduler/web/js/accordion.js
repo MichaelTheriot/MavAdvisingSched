@@ -1,2 +1,3 @@
-$("#accordion").accordion({heightStyle: "content"});
-
+window.addEventListener('load', function(event) {
+   $("#accordion").accordion({heightStyle: "content"}); 
+});

@@ -1,3 +1,5 @@
+window.addEventListener('load', function(event) {
+
 //$("#scheduleBtn").button();
 //$("#loginBtn").button().click(function(){});
 $("#loginBtn").on('click', function () {
@@ -53,3 +55,5 @@ function validate() {
 
     
 }
+
+});
