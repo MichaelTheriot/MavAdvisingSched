@@ -26,13 +26,15 @@
     for (int i = 0; i < availables.size(); i++) {
         sb.append(availables.get(i) + ",");
     }
+    request.setAttribute("temp", sb.toString());
+    request.setAttribute("availablesSize", availables.size());
 %>
 <t:box title="Schedule Appointment">
     <jsp:attribute name="script">
         <script type="text/javascript">
-            temp = "${sb.toString()}";
+            temp = "${temp}";
             var availableDates = new Array();
-            availableDates = temp.split(',', '${availables.size()}');
+            availableDates = temp.split(',', '${availablesSize}');
 
             //alert("array: " + availableDates);
             function available(date) {

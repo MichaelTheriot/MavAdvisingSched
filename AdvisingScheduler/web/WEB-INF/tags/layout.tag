@@ -13,6 +13,7 @@
         <title><%= pagetitle != null ? pagetitle : "UTA Advising" %></title>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+        <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
         <jsp:include page='/WEB-INF/views/scripts.jsp' />
         <jsp:invoke fragment="script"/>
     </head>

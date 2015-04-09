@@ -9,10 +9,10 @@
 <%
     String template = "guestFront";
     switch(rank) {
-        case 0:
+        case 1:
             template = "adminFront";
             break;
-        case 1:
+        case 0:
             template = "advisorFront";
             break;
     }

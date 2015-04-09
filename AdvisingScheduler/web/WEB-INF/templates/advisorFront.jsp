@@ -13,7 +13,7 @@
         <table class="centerthis" style='margin: 0 auto;'>
             <tr>
                 <td>
-                    <div id='leftAccordion'>
+                    <div>
                         <a href="index.jsp"><img class="centerthis" src="css/images/horse-lord.png"></a>
                         <h3>Faculty</h3>
                         <p>Welcome advisor.</p>
