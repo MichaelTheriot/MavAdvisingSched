@@ -1,57 +1,41 @@
+<%@include file="/WEB-INF/tools/sessionimport.jsp"%>
 <div id="navbar">
-    <% 
-        int rank = -1;
-        int sessionid = -1;
-        if(!(session.getAttribute("id") == null)){
-        sessionid = Integer.parseInt((String)session.getAttribute("id"));
-    }
-        if(!(session.getAttribute("rank") == null)){
-        rank = Integer.parseInt((String)session.getAttribute("rank"));
-    }
-    %>
-            <ul class="navigation">
-                <li class="home">
-                    <a href="index.jsp" >Home</a>
-                </li>
+    <ul class="navigation">
+        <li class="home">
+            <a href="index.jsp">Home</a>
+        </li>
     <%
-        if(session.getAttribute("rank") == null)
-        {
-            
+        switch(rank) {
+            case -1:
+                out.print("<li class='schedule'>\n"
+                        + "    <a href='schedule.jsp'>Schedule Appointment</a>\n"
+                        + "</li>\n");
+                break;
+            case 1:
+                out.print("<li class='account'>\n"
+                        + "    <a href='CreateAccount.jsp'>Create Account</a>\n"
+                        + "</li>\n");
+                break;
+            case 0:
+                out.print("<li class='calendar'>\n"
+                        + "    <a href='AdvisorCalendar.jsp'>Calendar</a>\n"
+                        + "</li>\n");
+                out.print("<li class='timeslot'>\n"
+                        + "    <a href='modifyTimeslot.jsp'>Time slot</a>\n"
+                        + "</li>\n");
+                out.print("<li class='appointment'>\n"
+                        + "    <a href='modifyAppointment.jsp'>Appointment</a>\n"
+                        + "</li>\n");
+                break;
         }
-        else{
-            if (rank == 1){
-                out.print("<li class='account'>"
-                        + "<a href='CreateAccount.jsp' >Create Account</a>"
-                        + "</li>");
-            }
-            if (rank == 0){
-                out.print("<li class='calendar'>"
-                        + "<a href='AdvisorCalendar.jsp' >Calendar</a>"
-                        + "</li>");
-                out.print("<li class='timeslot'>"
-                        + "<a href='modifyTimeslot.jsp' >Time slot</a>"
-                        + "</li>");
-                out.print("<li class='appointment'>"
-                        + "<a href='modifyAppointment.jsp' >Appointment</a>"
-                        + "</li>");
-            }
-            if (rank == 1 || rank == 0){
-                out.print("<li class='update-password'>"
-                        + "<a href='updatePassword.jsp'>Update Password</a>"
-                        + "</li>"
-                        + "<li class='logout'>"
-                        + "<a href='logout.jsp' >Log Out</a>"
-                        + "</li>");
-            }
-        }
-        if ((session.getAttribute("id") == null) || (session.getAttribute("rank") == null)){
-            out.print("<li class='schedule'>"
-                    + "<a href='schedule.jsp' >Schedule Appointment</a>"
-                    + "</li>");
+        if(rank != -1) {
+                out.print("<li class='update-password'>\n"
+                        + "    <a href='updatePassword.jsp'>Update Password</a>\n"
+                        + "</li>\n"
+                        + "<li class='logout'>\n"
+                        + "    <a href='logout.jsp'>Log Out</a>\n"
+                        + "</li>\n");
         }
     %>                
-            </ul>
-            <!--<span class="nav-date">
-                    <%= new java.util.Date()%>
-                </span> -->
-        </div>
+    </ul>
+</div>

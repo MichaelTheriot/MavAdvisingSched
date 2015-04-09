@@ -32,22 +32,24 @@
 <t:box title="Schedule Appointment">
     <jsp:attribute name="script">
         <script type="text/javascript">
-            temp = "${temp}";
-            var availableDates = new Array();
-            availableDates = temp.split(',', '${availablesSize}');
-
-            //alert("array: " + availableDates);
-            function available(date) {
-                dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-                if ($.inArray(dmy, availableDates) !== -1) {
-                    return [true, "", "Available"];
-                } else {
-                    return [false, "", "unAvailable"];
+            window.addEventListener('load', function(event) {
+                temp = "${temp}";
+                var availableDates = new Array();
+                availableDates = temp.split(',', '${availablesSize}');
+                
+                //alert("array: " + availableDates);
+                function available(date) {
+                    dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+                    if ($.inArray(dmy, availableDates) !== -1) {
+                        return [true, "", "Available"];
+                    } else {
+                        return [false, "", "unAvailable"];
+                    }
                 }
-            }
-            $(function () {
-                $('#date').datepicker({beforeShowDay: available});
-            })
+                $(function () {
+                    $('#date').datepicker({beforeShowDay: available});
+                })
+            });
         </script>
         <script type="text/javascript">
 
