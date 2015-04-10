@@ -47,7 +47,7 @@
                     }
                 }
                 $(function () {
-                    $('#date').datepicker({beforeShowDay: available});
+                    $('#s_date').datepicker({beforeShowDay: available});
                 })
             });
         </script>
