@@ -17,7 +17,7 @@ fieldset.calendar table caption {
 }
 fieldset.calendar td:not([colspan]) {
   text-align: center;
-  background-color: #7e7e8f;
+  background-color: rgb(86, 86, 118);
   color: #e0e0e0;
   height: 3em;
 }
