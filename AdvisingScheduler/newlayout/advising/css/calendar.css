@@ -1,0 +1,46 @@
+fieldset.calendar {
+  max-width: 320px;
+}
+fieldset.calendar table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 1px;
+  background-color: #1a3151;
+}
+fieldset.calendar table caption {
+  background-color: rgb(255, 125, 64);
+  border: 1px solid #1a3151;
+  border-bottom: none;
+  padding: 1em 0;
+  font-weight: bold;
+}
+fieldset.calendar td:not([colspan]) {
+  text-align: center;
+  background-color: #7e7e8f;
+  color: #e0e0e0;
+  height: 3em;
+}
+fieldset.calendar td label {
+  background-color: #244672;
+  color: #fff;
+}
+fieldset.calendar label {
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  height: 100%;
+  line-height: 3em;
+}
+fieldset.calendar input[type="radio"] {
+  display: none;
+}
+fieldset.calendar :checked  + label {
+  background-color: rgb(255, 125, 64);
+}
+fieldset.calendar th {
+  height: 2.5em;
+  vertical-align: middle;
+  background-color: #3566a7;
+  font-weight: normal;
+}
