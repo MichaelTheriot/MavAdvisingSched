@@ -21,16 +21,17 @@ fieldset.calendar td:not([colspan]) {
   color: #e0e0e0;
   height: 3em;
 }
-fieldset.calendar td label {
-  background-color: #244672;
-  color: #fff;
-}
 fieldset.calendar label {
   display: block;
   text-align: center;
   cursor: pointer;
   height: 100%;
   line-height: 3em;
+  background-color: #244672;
+  color: #fff;
+}
+fieldset.calendar label:hover {
+  background-color: #355783;
 }
 fieldset.calendar input[type="radio"] {
   display: none;

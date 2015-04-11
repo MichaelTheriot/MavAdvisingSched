@@ -77,6 +77,7 @@ form {
   /*border: 1px solid rgb(61, 91, 129);*/
 }
 fieldset {
+  text-align: center;
   min-width: 256px;
   padding: 0.5em;
   margin: 0 0.5em 1em;
@@ -104,6 +105,7 @@ form input {
 }
 form label {
   display: block;
+  text-align: left;
 }
 form label, form input {
   height: 2.4em;
@@ -111,7 +113,6 @@ form label, form input {
   padding: 0 0.5em;
 }
 form input[type="submit"] {
-  margin-top: 0.5em;
   background-color: rgb(255, 125, 64);
   color: #fff;
 }
@@ -156,5 +157,9 @@ body > footer {
   margin-right: 4em;
 }
 #copyright {
+  clear: both;
+}
+fieldset fieldset {
+  float: left;
   clear: both;
 }
