@@ -169,6 +169,8 @@ body > footer {
 }
 .list {
   float: right;
+}
+.panel {
   width: 40%;
 }
 fieldset fieldset {
