@@ -21,7 +21,14 @@
     </header>
     <main>
       <div id="content">
-        <form class="right">
+        <form class="list">
+        <input class="tab" id="s_tab1" type="radio" name="tab" checked />
+        <input class="tab" id="s_tab2" type="radio" name="tab" />
+        <input class="tab" id="s_tab3" type="radio" name="tab" />
+        <input class="tab" id="s_tab4" type="radio" name="tab" />
+        <input class="tab" id="s_tab5" type="radio" name="tab" />
+        <input class="tab review" id="s_tab6" type="radio" name="tab" />
+        <fieldset>
           <fieldset>
             <legend>Enter student information</legend>
             <ol>
@@ -48,6 +55,9 @@
                 <select name="advisor" id="s_advisor" disabled>
                   <option disabled selected>----</option>
                 </select>
+              </li>
+              <li class="tabs">
+                <label class="tabnav" for="s_tab2">Next</label>
               </li>
             </ol>
           </fieldset>
@@ -78,6 +88,7 @@
                 </tr>
               </tbody>
             </table>
+            <label class="tabnav" for="s_tab3">Next</label>
           </fieldset>
           <fieldset class="radioblocks">
             <legend>Select a date</legend>
@@ -137,9 +148,10 @@
                 </tr>
               </tbody>
             </table>
+            <label class="tabnav" for="s_tab4">Next</label>
           </fieldset>
           <fieldset class="radioblocks">
-            <legend>Pick a time slot</legend>
+            <legend>Select a time slot</legend>
             <table>
               <caption>Time slots</caption>
               <tbody>
@@ -154,6 +166,28 @@
                 </tr>
               </tbody>
             </table>
+            <label class="tabnav" for="s_tab5">Next</label>
+          </fieldset>
+          <fieldset>
+            <legend>Enter appointment details</legend>
+            <ol>
+              <li>
+                <label for="s_reason">Reason</label>
+                <input type="text" name="reason" id="s_reason" placeholder="Enter a reason..." />
+              </li>
+              <li>
+                <label for="s_info">Additional Information</label>
+                <textarea name="info" id="s_info" placeholder="Enter additional information (optional)..." /></textarea>
+              </li>
+              <li class="tabs">
+                <label class="tabnav" for="s_tab6">Review</label>
+              </li>
+            </ol>
+          </fieldset>
+          <fieldset>
+            <legend>Review and submit</legend>
+            <input class="tabsubmit" type="submit" value="Schedule Appointment" />
+          </fieldset>
           </fieldset>
         </form>
         <h2>Schedule an Appointment</h2>

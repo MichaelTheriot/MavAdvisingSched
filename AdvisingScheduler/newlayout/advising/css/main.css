@@ -75,7 +75,6 @@ form {
 }
 fieldset {
   text-align: center;
-  min-width: 384px;
   padding: 0.5em;
   margin: 0 0.5em 1em;
   border: 1px solid rgb(61, 91, 129);
@@ -93,7 +92,7 @@ form ol li {
 form ol li:first-child {
   margin-top: 0;
 }
-form input, form select {
+form input, form select, form textarea {
   border: none;
   color: #333;
   float: right;
@@ -104,10 +103,17 @@ form label {
   display: block;
   text-align: left;
 }
-form label, form input, form select, form option {
+form label, form input, form select, form option, form textarea {
   height: 2.4em;
   line-height: 2.4em;
   padding: 0 0.5em;
+}
+form textarea {
+  height: auto;
+  min-height: 7.2em;
+  line-height: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 form select[disabled] {
   background-color: #ccc;
@@ -121,9 +127,6 @@ legend {
   padding: 0 1em;
   padding-bottom: 0em;
   line-height: 1em;
-}
-input:focus {
-  outline: none;
 }
 body > footer {
   background-color: rgb(55, 99, 154);
@@ -159,7 +162,59 @@ body > footer {
 #copyright {
   clear: both;
 }
+.list > fieldset {
+  background-color: rgb(31, 61, 99);
+}
+.list {
+  float: right;
+  width: 40%;
+}
 fieldset fieldset {
-  float: left;
-  clear: both;
+  display: block;
+  margin: 0;
+  border: none;
+}
+fieldset fieldset legend {
+  line-height: 2em;
+}
+.list input.tab.review:checked ~ fieldset fieldset ~ fieldset {
+  border-top: 1px solid rgb(61, 91, 129);
+}
+.list > input.tab {
+  display: none;
+}
+
+.tab.review:checked ~ fieldset fieldset {
+  display: block !important;
+}
+.tab:checked:nth-of-type(1) ~ fieldset fieldset:not(:nth-of-type(1)),
+.tab:checked:nth-of-type(2) ~ fieldset fieldset:not(:nth-of-type(2)),
+.tab:checked:nth-of-type(3) ~ fieldset fieldset:not(:nth-of-type(3)),
+.tab:checked:nth-of-type(4) ~ fieldset fieldset:not(:nth-of-type(4)),
+.tab:checked:nth-of-type(5) ~ fieldset fieldset:not(:nth-of-type(5)),
+.tab:checked:nth-of-type(6) ~ fieldset fieldset:not(:nth-of-type(6)) {
+  display: none;
+}
+li.tabs {
+  text-align: center;
+  background: none;
+}
+label.tabnav {
+  background-color: rgb(255, 125, 64) !important;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  height: 2.4em !important;
+  line-height: 2.4em !important;
+  padding: 0 0.5em !important;
+  color: #fff !important;
+}
+*:not(li) > .tabnav {
+  margin-top: 0.5em !important;
+}
+.review:checked ~ fieldset .tabs, .review:checked ~ fieldset .tabnav {
+  display: none;
+}
+.tab:not(.review):checked ~ fieldset .tabsubmit {
+  display: none;
 }

@@ -1,20 +1,18 @@
-fieldset.radioblocks {
-  max-width: 320px;
-}
 fieldset.radioblocks table {
   table-layout: fixed;
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 1px;
   background-color: #1a3151;
   background-color: transparent;
 }
+fieldset.radioblocks * ~ td, fieldset.radioblocks * ~ th {
+  border-left: 1px solid #244672;
+}
+fieldset.radioblocks tr ~ tr td, fieldset.radioblocks tr ~ tr th {
+  border-top: 1px solid #244672;
+}
 fieldset.radioblocks table caption {
-  background-color: rgb(255, 125, 64);
   background-color: #3566a7;
-  border: 1px solid #1a3151;
-  border: 1px solid #244672;
-  border-bottom: none;
+  border-bottom: 1px solid #244672;
   padding: 1em 0;
   font-weight: bold;
 }
