@@ -164,6 +164,8 @@ body > footer {
 }
 .list > fieldset {
   background-color: rgb(31, 61, 99);
+  padding-left: 1em;
+  padding-right: 1em;
 }
 .list {
   float: right;
@@ -173,11 +175,13 @@ fieldset fieldset {
   display: block;
   margin: 0;
   border: none;
+  padding-left: 0;
+  padding-right: 0;
 }
 fieldset fieldset legend {
   line-height: 2em;
 }
-.list input.tab.review:checked ~ fieldset fieldset ~ fieldset {
+.list fieldset fieldset{
   border-top: 1px solid rgb(61, 91, 129);
 }
 .list > input.tab {
