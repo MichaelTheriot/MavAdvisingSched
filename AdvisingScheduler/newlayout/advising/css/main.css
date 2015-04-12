@@ -183,7 +183,6 @@ fieldset fieldset legend {
 .list > input.tab {
   display: none;
 }
-
 .tab.review:checked ~ fieldset fieldset {
   display: block !important;
 }
@@ -195,10 +194,6 @@ fieldset fieldset legend {
 .tab:checked:nth-of-type(6) ~ fieldset fieldset:not(:nth-of-type(6)) {
   display: none;
 }
-li.tabs {
-  text-align: center;
-  background: none;
-}
 label.tabnav {
   background-color: rgb(255, 125, 64) !important;
   display: block;
@@ -208,13 +203,8 @@ label.tabnav {
   line-height: 2.4em !important;
   padding: 0 0.5em !important;
   color: #fff !important;
-}
-*:not(li) > .tabnav {
   margin-top: 0.5em !important;
 }
-.review:checked ~ fieldset .tabs, .review:checked ~ fieldset .tabnav {
-  display: none;
-}
-.tab:not(.review):checked ~ fieldset .tabsubmit {
+.review:checked ~ fieldset .tabnav, .tab:not(.review):checked ~ fieldset .tabsubmit {
   display: none;
 }
