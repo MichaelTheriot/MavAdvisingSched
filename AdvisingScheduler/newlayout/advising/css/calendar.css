@@ -1,46 +1,52 @@
-fieldset.calendar {
+fieldset.radioblocks {
   max-width: 320px;
 }
-fieldset.calendar table {
+fieldset.radioblocks table {
   table-layout: fixed;
   width: 100%;
   border-collapse: separate;
   border-spacing: 1px;
   background-color: #1a3151;
+  background-color: transparent;
 }
-fieldset.calendar table caption {
+fieldset.radioblocks table caption {
   background-color: rgb(255, 125, 64);
+  background-color: #3566a7;
   border: 1px solid #1a3151;
+  border: 1px solid #244672;
   border-bottom: none;
   padding: 1em 0;
   font-weight: bold;
 }
-fieldset.calendar td:not([colspan]) {
+fieldset.radioblocks td:not([colspan]) {
   text-align: center;
-  background-color: rgb(86, 86, 118);
-  color: #e0e0e0;
-  height: 3em;
+  background-color: hsl(214, 10%, 60%);
+  color: #fff;
+  height: 3.5em;
 }
-fieldset.calendar label {
+fieldset.radioblocks label {
   display: block;
   text-align: center;
   cursor: pointer;
   height: 100%;
-  line-height: 3em;
+  line-height: 3.5em;
   background-color: #244672;
+  background-color: #fff;
   color: #fff;
+  color: #333;
 }
-fieldset.calendar label:hover {
-  background-color: #355783;
+fieldset.radioblocks label:hover {
+  background-color: rgb(222, 222, 222);
 }
-fieldset.calendar input[type="radio"] {
+fieldset.radioblocks input[type="radio"] {
   display: none;
 }
-fieldset.calendar :checked  + label {
+fieldset.radioblocks :checked  + label {
   background-color: rgb(255, 125, 64);
+  color: #fff;
 }
-fieldset.calendar th {
-  height: 2.5em;
+fieldset.radioblocks th {
+  height: 2em;
   vertical-align: middle;
   background-color: #3566a7;
   font-weight: normal;

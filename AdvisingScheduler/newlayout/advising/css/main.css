@@ -1,4 +1,4 @@
-main {
+body > main {
   background-color: #244672;
   padding-top: 1em;
   padding-bottom: 1em;
@@ -34,7 +34,7 @@ body > header nav li > a {
 body > header nav li > a.sel {
   background-color: rgb(31, 61, 99);
 }
-body > header nav li {
+body > header nav li:not(:first-child) {
   border-left: 1px solid rgb(31, 61, 99);
 }
 nav > ul {
@@ -51,7 +51,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   font-family: serif;
 }
-main {
+body > main {
   color: rgb(178, 203, 204);
 }
 body > header > h1, body > header nav > ul, body > main > div, body > footer > div {
@@ -60,9 +60,6 @@ body > header > h1, body > header nav > ul, body > main > div, body > footer > d
   margin-right: auto;
   padding-left: 16px;
   padding-right: 16px;
-}
-#content > *:first-child {
-  margin-top: 0;
 }
 .right {
   float: right;
@@ -78,7 +75,7 @@ form {
 }
 fieldset {
   text-align: center;
-  min-width: 256px;
+  min-width: 384px;
   padding: 0.5em;
   margin: 0 0.5em 1em;
   border: 1px solid rgb(61, 91, 129);
@@ -96,9 +93,9 @@ form ol li {
 form ol li:first-child {
   margin-top: 0;
 }
-form input {
+form input, form select {
   border: none;
-  color: #666;
+  color: #333;
   float: right;
   width: 100%;
   box-sizing: border-box;
@@ -107,10 +104,13 @@ form label {
   display: block;
   text-align: left;
 }
-form label, form input {
+form label, form input, form select, form option {
   height: 2.4em;
   line-height: 2.4em;
   padding: 0 0.5em;
+}
+form select[disabled] {
+  background-color: #ccc;
 }
 form input[type="submit"] {
   background-color: rgb(255, 125, 64);

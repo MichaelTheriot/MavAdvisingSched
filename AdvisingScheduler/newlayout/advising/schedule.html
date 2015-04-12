@@ -22,7 +22,36 @@
     <main>
       <div id="content">
         <form class="right">
-          <fieldset class="calendar">
+          <fieldset>
+            <legend>Enter student information</legend>
+            <ol>
+              <li>
+                <label for="s_dept">Department</label>
+                <select name="dept" id="s_dept">
+                  <option disabled selected>-- Select a department --</option>
+                  <option value="cse">Computer Science and Engineering</option>
+                </select>
+              </li>
+              <li>
+                <label for="s_major">Major</label>
+                <select name="major" id="s_major">
+                  <option disabled selected>-- Select a major --</option>
+                  <option value="undecided">Undecided</option>
+                  <option value="cs">Computer Science</option>
+                  <option value="se">Software Engineering</option>
+                  <option value="ce">Computer Engineering</option>
+                  <option value="other">Other</option>
+                </select>
+              </li>
+              <li>
+                <label for="s_advisor">Advisor</label>
+                <select name="advisor" id="s_advisor" disabled>
+                  <option disabled selected>----</option>
+                </select>
+              </li>
+            </ol>
+          </fieldset>
+          <fieldset class="radioblocks">
             <legend>Select a month</legend>
             <table>
               <caption>2015</caption>
@@ -50,7 +79,7 @@
               </tbody>
             </table>
           </fieldset>
-          <fieldset class="calendar">
+          <fieldset class="radioblocks">
             <legend>Select a date</legend>
             <table>
               <caption>January</caption>
@@ -109,9 +138,34 @@
               </tbody>
             </table>
           </fieldset>
+          <fieldset class="radioblocks">
+            <legend>Pick a time slot</legend>
+            <table>
+              <caption>Time slots</caption>
+              <tbody>
+                <tr>
+                  <td><input type="radio" name="slot" id="s_0000" /><label for="s_0000">12:00 AM</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="slot" id="s_0030" /><label for="s_0030">12:30 AM</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="slot" id="s_0100" /><label for="s_0100">01:00 AM</label></td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
         </form>
         <h2>Schedule an Appointment</h2>
-        <p>Set up an appointment with your advisor.</p>
+        <p>Use this form to schedule an appointment with an advisor.</p>
+        <h3>Enter Student Information</h3>
+        <p>Please fill out some information about the advising you are seeking.</p>
+        <h3>Select a Period</h3>
+        <p>Select the month you are seeking advising.</p>
+        <h3>Select a Date</h3>
+        <p>Select an available date for advising.</p>
+        <h3>Select a Time</h3>
+        <p>Select an available time slot for the chosen advisor.</p>
       </div>
     </main>
     <footer>
