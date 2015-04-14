@@ -1,18 +1,6 @@
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `debug_msg`$$
-DROP PROCEDURE IF EXISTS `check_slot`$$
-DROP PROCEDURE IF EXISTS `create_student`$$
-DROP PROCEDURE IF EXISTS `create_advisor`$$
-DROP PROCEDURE IF EXISTS `schedule_appointment_user`$$
-DROP PROCEDURE IF EXISTS `schedule_appointment_unregistered`$$
-
-CREATE PROCEDURE debug_msg(msg VARCHAR(255))
-BEGIN
-select concat("** ", msg) AS '** DEBUG:';
-END $$
-
-CREATE PROCEDURE create_advisor(
+CREATE PROCEDURE create_advisor (
     IN email VARCHAR(85),
     IN password CHAR(64),
     IN fname VARCHAR(35) CHARSET utf8,
@@ -48,10 +36,10 @@ BEGIN
 
     INSERT INTO user(email, password, fname, lname, rank) VALUES(email, password, fname, lname, leadrole + 1);
     SET userid = LAST_INSERT_ID();
-    INSERT INTO advisor_user(userid, departmentid) VALUES(userid, departmentid);
+    INSERT INTO advisor(userid, departmentid) VALUES(userid, departmentid);
 END $$
 
-CREATE PROCEDURE create_student(
+CREATE PROCEDURE create_student (
     IN email VARCHAR(85),
     IN password CHAR(64),
     IN fname VARCHAR(35) CHARSET utf8,
@@ -82,7 +70,7 @@ BEGIN
     INSERT INTO student_user VALUES(studentid, userid, utastudentid, major);
 END $$
 
-CREATE PROCEDURE check_slot(
+CREATE PROCEDURE check_slot (
     IN slotid INT
 )
 BEGIN 
@@ -103,14 +91,14 @@ BEGIN
     END IF;
 END $$
 
-CREATE PROCEDURE schedule_appointment_user(
+CREATE PROCEDURE schedule_appointment (
     IN studentid INT,
     IN reason VARCHAR(30),
     IN description VARCHAR(100),
     IN slotid INT
 )
 BEGIN
-    CALL CheckAvailableSlot(slotid);
+    CALL check_slot(slotid);
 
     IF NULLIF(reason, '') IS NULL THEN
         SIGNAL SQLSTATE '45000'
@@ -120,7 +108,7 @@ BEGIN
     INSERT INTO appointment VALUES(slotid, studentid, reason, description);
 END $$
 
-CREATE PROCEDURE schedule_appointment_unregistered(
+CREATE PROCEDURE schedule_appointment_unregistered (
     IN fname VARCHAR(35) CHARSET utf8,
     IN lname VARCHAR(35) CHARSET utf8,
     IN email VARCHAR(85),
@@ -131,7 +119,7 @@ CREATE PROCEDURE schedule_appointment_unregistered(
 BEGIN
     DECLARE studentid INT;
 
-    CALL CheckAvailableSlot(slotid);
+    CALL check_slot(slotid);
 
     IF (
         NULLIF(email, '') IS NULL
@@ -163,5 +151,3 @@ BEGIN
 END $$
 
 DELIMITER ;
-
-CALL create_student("michael.theriot@mavs.uta.edu", "test", "Michael", "Theriot", "1000957432", "Software Engineering");

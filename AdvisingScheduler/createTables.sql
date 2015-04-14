@@ -6,38 +6,41 @@ CREATE TABLE department (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE user (
+  id INT NOT NULL AUTO_INCREMENT,
+  email VARCHAR(85) NOT NULL,
+  password CHAR(64) NOT NULL,
+  fname VARCHAR(35) CHARSET utf8 NOT NULL,
+  lname VARCHAR(35) CHARSET utf8 NOT NULL,
+  rank INT NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE (email)
+);
+
+CREATE TABLE advisor (
+  id INT NOT NULL AUTO_INCREMENT,
+  userid INT NOT NULL,
+  departmentid INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (userid) REFERENCES user(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE slot (
+  id INT NOT NULL AUTO_INCREMENT,
+  advisorid INT NOT NULL,
+  starttime DATETIME NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (advisorid) REFERENCES advisor(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
 CREATE TABLE appointment (
   slotid INT NOT NULL,
   studentid INT NOT NULL,
   reason VARCHAR(30) NOT NULL,
   description VARCHAR(100),
-  PRIMARY KEY (slotid)
-);
-
-CREATE TABLE advisor_slot (
-  slotid INT NOT NULL,
-  advisorid INT NOT NULL,
-  PRIMARY KEY (slotid)
-);
-
-CREATE TABLE student_appt (
-  apptid INT NOT NULL,
-  studentid INT NOT NULL,
-  PRIMARY KEY (apptid)
-);
-
-CREATE TABLE slot (
-  id INT NOT NULL AUTO_INCREMENT,
-  starttime DATETIME NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE advisor_user (
-  advisorid INT NOT NULL AUTO_INCREMENT,
-  userid INT NOT NULL,
-  departmentid INT NOT NULL,
-  PRIMARY KEY (advisorid)
-);
+  PRIMARY KEY (slotid),
+  FOREIGN KEY (slotid) REFERENCES slot(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 CREATE TABLE student (
   id INT NOT NULL AUTO_INCREMENT,
@@ -59,59 +62,22 @@ CREATE TABLE student_user (
   utastudentid CHAR(10) NOT NULL,
   major VARCHAR(30) NOT NULL,
   PRIMARY KEY (studentid),
+  FOREIGN KEY (userid) REFERENCES user(id),
   UNIQUE (userid)
 );
 
-CREATE TABLE user (
-  id INT NOT NULL AUTO_INCREMENT,
-  email VARCHAR(85) NOT NULL,
-  password CHAR(64) NOT NULL,
-  fname VARCHAR(35) CHARSET utf8 NOT NULL,
-  lname VARCHAR(35) CHARSET utf8 NOT NULL,
-  rank INT NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE (email)
-);
+ALTER TABLE slot
+  ADD UNIQUE unique_index(advisorid, starttime);
 
-ALTER TABLE appointment
-  ADD CONSTRAINT bind_slotid_to_appointment
-  FOREIGN KEY (slotid)
-  REFERENCES slot(id);
-
-ALTER TABLE appointment
-  ADD CONSTRAINT bind_studentid_to_appointment
-  FOREIGN KEY (studentid)
-  REFERENCES student(id);
-
-ALTER TABLE advisor_slot
-  ADD CONSTRAINT bind_slotid_to_advisor_slot
-  FOREIGN KEY (slotid)
-  REFERENCES slot(id);
-
-ALTER TABLE advisor_slot
-  ADD CONSTRAINT bind_advisorid_to_advisor_slot
-  FOREIGN KEY (advisorid)
-  REFERENCES advisor_user(advisorid);
-
-ALTER TABLE advisor_user
-  ADD CONSTRAINT bind_userid_to_advisor_user
+ALTER TABLE advisor
+  ADD CONSTRAINT bind_userid_to_advisor
   FOREIGN KEY (userid)
   REFERENCES user(id);
 
-ALTER TABLE advisor_user
-  ADD CONSTRAINT bind_departmentid_to_advisor_user
+ALTER TABLE advisor
+  ADD CONSTRAINT bind_departmentid_to_advisor
   FOREIGN KEY (departmentid)
   REFERENCES department(id);
-
-ALTER TABLE student_appt
-  ADD CONSTRAINT bind_apptid_to_student_appt
-  FOREIGN KEY (apptid)
-  REFERENCES appointment(slotid);
-
-ALTER TABLE student_appt
-  ADD CONSTRAINT bind_studentid_to_student_appt
-  FOREIGN KEY (studentid)
-  REFERENCES student(id);
 
 ALTER TABLE student_unregistered
   ADD CONSTRAINT bind_studentid_to_student_unregistered
@@ -123,7 +89,14 @@ ALTER TABLE student_user
   FOREIGN KEY (studentid)
   REFERENCES student(id);
 
-ALTER TABLE student_user
-  ADD CONSTRAINT bind_userid_to_student_user
-  FOREIGN KEY (userid)
-  REFERENCES user(id);
+CREATE VIEW student_appointment AS
+SELECT slot.starttime AS time, advisor.id as advisor_id, concat(auser.fname, ' ', auser.lname) as advisor, concat(suser.fname, ' ', suser.lname) as student, stud_user.utastudentid as uta_student_id, suser.email as student_email, appt.reason, appt.description
+FROM slot, student AS stud, student_user AS stud_user, user AS auser, user AS suser, advisor, appointment AS appt
+WHERE slot.id = appt.slotid AND appt.studentid = stud.id AND stud.id = stud_user.studentid AND stud_user.userid = suser.id AND advisor.id = slot.advisorid AND auser.id = advisor.userid
+ORDER BY slot.starttime;
+
+CREATE VIEW unregistered_appointment AS
+SELECT advisor.id as advisor_id, concat(auser.fname, ' ', auser.lname) as advisor, concat(suser.fname, ' ', suser.lname) as student, suser.email as student_email, appt.reason, appt.description, slot.starttime AS time
+FROM slot, student AS stud, user AS auser, student_unregistered AS suser, advisor, appointment AS appt
+WHERE slot.id = appt.slotid AND appt.studentid = stud.id AND stud.id = suser.studentid AND advisor.id = slot.advisorid AND auser.id = advisor.userid
+ORDER BY slot.starttime;
