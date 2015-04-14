@@ -1,10 +1,22 @@
 -- Note studentid is a database variable and utastudentid is the student's UT Arlington student ID
 
+CREATE TABLE department (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE appointment (
   slotid INT NOT NULL,
   studentid INT NOT NULL,
   reason VARCHAR(30) NOT NULL,
   description VARCHAR(100),
+  PRIMARY KEY (slotid)
+);
+
+CREATE TABLE advisor_slot (
+  slotid INT NOT NULL,
+  advisorid INT NOT NULL,
   PRIMARY KEY (slotid)
 );
 
@@ -18,6 +30,13 @@ CREATE TABLE slot (
   id INT NOT NULL AUTO_INCREMENT,
   starttime DATETIME NOT NULL,
   PRIMARY KEY (id)
+);
+
+CREATE TABLE advisor_user (
+  advisorid INT NOT NULL AUTO_INCREMENT,
+  userid INT NOT NULL,
+  departmentid INT NOT NULL,
+  PRIMARY KEY (advisorid)
 );
 
 CREATE TABLE student (
@@ -64,6 +83,26 @@ ALTER TABLE appointment
   FOREIGN KEY (studentid)
   REFERENCES student(id);
 
+ALTER TABLE advisor_slot
+  ADD CONSTRAINT bind_slotid_to_advisor_slot
+  FOREIGN KEY (slotid)
+  REFERENCES slot(id);
+
+ALTER TABLE advisor_slot
+  ADD CONSTRAINT bind_advisorid_to_advisor_slot
+  FOREIGN KEY (advisorid)
+  REFERENCES advisor_user(advisorid);
+
+ALTER TABLE advisor_user
+  ADD CONSTRAINT bind_userid_to_advisor_user
+  FOREIGN KEY (userid)
+  REFERENCES user(id);
+
+ALTER TABLE advisor_user
+  ADD CONSTRAINT bind_departmentid_to_advisor_user
+  FOREIGN KEY (departmentid)
+  REFERENCES department(id);
+
 ALTER TABLE student_appt
   ADD CONSTRAINT bind_apptid_to_student_appt
   FOREIGN KEY (apptid)
@@ -87,4 +126,4 @@ ALTER TABLE student_user
 ALTER TABLE student_user
   ADD CONSTRAINT bind_userid_to_student_user
   FOREIGN KEY (userid)
-  REFERENCES student(id);
+  REFERENCES user(id);
