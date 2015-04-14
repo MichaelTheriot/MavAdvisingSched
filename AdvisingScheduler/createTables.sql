@@ -90,13 +90,18 @@ ALTER TABLE student_user
   REFERENCES student(id);
 
 CREATE VIEW student_appointment AS
-SELECT slot.starttime AS time, advisor.id as advisor_id, concat(auser.fname, ' ', auser.lname) as advisor, concat(suser.fname, ' ', suser.lname) as student, stud_user.utastudentid as uta_student_id, suser.email as student_email, appt.reason, appt.description
+SELECT slot.starttime AS time, advisor.id AS advisor_id, concat(auser.fname, ' ', auser.lname) AS advisor, concat(suser.fname, ' ', suser.lname) AS student, stud_user.utastudentid AS uta_student_id, suser.email AS student_email, appt.reason, appt.description, appt.id AS appt_id, slot.id AS slot_id
 FROM slot, student AS stud, student_user AS stud_user, user AS auser, user AS suser, advisor, appointment AS appt
 WHERE slot.id = appt.slotid AND appt.studentid = stud.id AND stud.id = stud_user.studentid AND stud_user.userid = suser.id AND advisor.id = slot.advisorid AND auser.id = advisor.userid
 ORDER BY slot.starttime;
 
 CREATE VIEW unregistered_appointment AS
-SELECT advisor.id as advisor_id, concat(auser.fname, ' ', auser.lname) as advisor, concat(suser.fname, ' ', suser.lname) as student, suser.email as student_email, appt.reason, appt.description, slot.starttime AS time
+SELECT advisor.id AS advisor_id, concat(auser.fname, ' ', auser.lname) AS advisor, concat(suser.fname, ' ', suser.lname) AS student, suser.email AS student_email, appt.reason, appt.description, slot.starttime AS time, appt.id AS appt_id, slot.id AS slot_id
 FROM slot, student AS stud, user AS auser, student_unregistered AS suser, advisor, appointment AS appt
 WHERE slot.id = appt.slotid AND appt.studentid = stud.id AND stud.id = suser.studentid AND advisor.id = slot.advisorid AND auser.id = advisor.userid
 ORDER BY slot.starttime;
+
+CREATE VIEW any_appointment AS
+SELECT advisor_id, advisor, student, uta_student_id, student_email, reason, description, time, appt_id, slot_id FROM student_appointment
+UNION
+SELECT advisor_id, advisor, student, NULL, student_email, reason, description, time, appt_id, slot_id from unregistered_appointment;
