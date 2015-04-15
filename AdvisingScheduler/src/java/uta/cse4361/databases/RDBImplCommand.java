@@ -7,6 +7,7 @@ package uta.cse4361.databases;
 
 import java.sql.*;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
 /**
  *
@@ -21,10 +22,11 @@ public abstract class RDBImplCommand {
     static final String USER = "root";
     static final String PASS = "er1ja@18xs@3";
 
-    protected Object result;
     protected Connection conn;
     protected PreparedStatement statement;
     protected ResultSet resultSet;
+    protected int success;
+    protected Object result;
 
     public void execute() {
         try {
@@ -51,11 +53,15 @@ public abstract class RDBImplCommand {
         }
     }
 
+    public int succeeded() {
+        return success;
+    }
+
     public Object getResult() {
         return result;
     }
 
     public abstract void queryDB() throws SQLException;
 
-    public abstract void processResult();
+    //public abstract void processResult();
 }

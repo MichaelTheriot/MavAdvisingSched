@@ -8,13 +8,16 @@
         <ul>
 <t:navlink url="/" name="Home" />
 <% if(rank < 1) { %>
-<t:navlink url="/schedule" name="Schedule" />
+<t:navlink url="/schedule" name="Schedule Appointment" />
 <% }
    if(rank == -1) { %>
-<t:navlink url="/signin" name="Sign in" />
+<t:navlink url="/login" name="Sign in" />
 <t:navlink url="/register" name="Register" />
 <% } else if(rank == 0) { %>
-<t:navlink url="/appointments" name="My appointments" />
+<t:navlink url="/appointments" name="View Appointments" />
+<% } %>
+<% if(rank >= 0) { %>
+<t:navlink url="/logout" name="Sign Out" />
 <% } %>
         </ul>
       </nav>
