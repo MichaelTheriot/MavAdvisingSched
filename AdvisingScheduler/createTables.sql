@@ -12,6 +12,7 @@ CREATE TABLE user (
   password CHAR(64) NOT NULL,
   fname VARCHAR(35) CHARSET utf8 NOT NULL,
   lname VARCHAR(35) CHARSET utf8 NOT NULL,
+  phone CHAR(10),
   rank INT NOT NULL,
   PRIMARY KEY (id),
   UNIQUE (email)
@@ -52,6 +53,7 @@ CREATE TABLE student_unregistered (
   fname VARCHAR(35) CHARSET utf8 NOT NULL,
   lname VARCHAR(35) CHARSET utf8 NOT NULL,
   email VARCHAR(85) NOT NULL,
+  phone CHAR(10),
   PRIMARY KEY (studentid),
   UNIQUE (email)
 );
@@ -90,18 +92,25 @@ ALTER TABLE student_user
   REFERENCES student(id);
 
 CREATE VIEW student_appointment AS
-SELECT slot.starttime AS time, advisor.id AS advisor_id, concat(auser.fname, ' ', auser.lname) AS advisor, concat(suser.fname, ' ', suser.lname) AS student, stud_user.utastudentid AS uta_student_id, suser.email AS student_email, appt.reason, appt.description, appt.id AS appt_id, slot.id AS slot_id
+SELECT slot.starttime AS time, advisor.id AS advisor_id, concat(auser.fname, ' ', auser.lname) AS advisor, concat(suser.fname, ' ', suser.lname) AS student, stud_user.utastudentid AS uta_student_id, suser.email AS student_email, suser.phone AS student_phone, appt.reason, appt.description, slot.id AS appt_id
 FROM slot, student AS stud, student_user AS stud_user, user AS auser, user AS suser, advisor, appointment AS appt
 WHERE slot.id = appt.slotid AND appt.studentid = stud.id AND stud.id = stud_user.studentid AND stud_user.userid = suser.id AND advisor.id = slot.advisorid AND auser.id = advisor.userid
 ORDER BY slot.starttime;
 
 CREATE VIEW unregistered_appointment AS
-SELECT advisor.id AS advisor_id, concat(auser.fname, ' ', auser.lname) AS advisor, concat(suser.fname, ' ', suser.lname) AS student, suser.email AS student_email, appt.reason, appt.description, slot.starttime AS time, appt.id AS appt_id, slot.id AS slot_id
+SELECT advisor.id AS advisor_id, concat(auser.fname, ' ', auser.lname) AS advisor, concat(suser.fname, ' ', suser.lname) AS student, suser.email AS student_email, suser.phone AS student_phone, appt.reason, appt.description, slot.starttime AS time, slot.id AS appt_id
 FROM slot, student AS stud, user AS auser, student_unregistered AS suser, advisor, appointment AS appt
 WHERE slot.id = appt.slotid AND appt.studentid = stud.id AND stud.id = suser.studentid AND advisor.id = slot.advisorid AND auser.id = advisor.userid
 ORDER BY slot.starttime;
 
 CREATE VIEW any_appointment AS
-SELECT advisor_id, advisor, student, uta_student_id, student_email, reason, description, time, appt_id, slot_id FROM student_appointment
+SELECT advisor_id, advisor, student, uta_student_id, student_email, student_phone, reason, description, time, appt_id FROM student_appointment
 UNION
-SELECT advisor_id, advisor, student, NULL, student_email, reason, description, time, appt_id, slot_id from unregistered_appointment;
+SELECT advisor_id, advisor, student, NULL, student_email, student_phone, reason, description, time, appt_id from unregistered_appointment
+ORDER BY time;
+
+CREATE VIEW available_slot AS
+SELECT  slot.id, department.name, concat(user.fname, ' ', user.lname) AS advisor_name, user.rank, starttime AS time
+FROM slot, advisor, department, user
+WHERE slot.id NOT IN (SELECT DISTINCT slotid FROM appointment) AND starttime > now() AND advisor.id = slot.advisorid AND department.id = advisor.departmentid AND user.id = advisor.userid
+ORDER BY starttime;
