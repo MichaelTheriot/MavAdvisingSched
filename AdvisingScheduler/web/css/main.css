@@ -1,0 +1,217 @@
+body > main {
+  background-color: #244672;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  overflow: hidden;
+}
+footer {
+  background-color: rgb(55, 99, 154);
+}
+body {
+  background-color: #1a3151;
+  font-family: serif;
+  font-size: 16px;
+  color: #fff;
+}
+body > header {
+  background-color: rgb(31, 61, 99);
+  overflow: hidden;
+  font-size: 1.1em;
+}
+body > header nav {
+  background-color: rgb(255, 125, 64);
+  float: left;
+  width: 100%;
+  font-size: 0.8em;
+  font-family: sans-serif;
+}
+body > header nav li > a {
+  color: #fff;
+  padding: 0.8em 1em;
+  text-decoration: none;
+  display: block;
+}
+body > header nav li > a.sel {
+  background-color: rgb(31, 61, 99);
+}
+body > header nav li:not(:first-child) {
+  border-left: 1px solid rgb(31, 61, 99);
+}
+nav > ul {
+  list-style-type: none;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+nav > ul > li {
+  float: left;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+  font-weight: normal;
+  font-family: serif;
+}
+body > main {
+  color: rgb(178, 203, 204);
+}
+body > header > h1, body > header nav > ul, body > main > div, body > footer > div {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.right {
+  float: right;
+  clear: right;
+}
+form {
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 0.9em;
+  color: #fff;
+  /*background-color: rgb(31, 61, 99);*/
+  /*border: 1px solid rgb(61, 91, 129);*/
+}
+fieldset {
+  text-align: center;
+  padding: 0.5em;
+  margin: 0 0.5em 1em;
+  border: 1px solid rgb(61, 91, 129);
+}
+form ol {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+form ol li {
+  overflow: hidden;
+  margin-top: 0.5em;
+  background-color: #3566a7;
+}
+form ol li:first-child {
+  margin-top: 0;
+}
+form input, form select, form textarea {
+  border: none;
+  color: #333;
+  float: right;
+  width: 100%;
+  box-sizing: border-box;
+}
+form label {
+  display: block;
+  text-align: left;
+}
+form label, form input, form select, form option, form textarea {
+  height: 2.4em;
+  line-height: 2.4em;
+  padding: 0 0.5em;
+}
+form textarea {
+  height: auto;
+  min-height: 7.2em;
+  line-height: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+form select[disabled] {
+  background-color: #ccc;
+}
+form input[type="submit"] {
+  margin-top: 0.5em;
+  background-color: rgb(255, 125, 64);
+  color: #fff;
+}
+legend {
+  margin: auto;
+  padding: 0 1em;
+  padding-bottom: 0em;
+  line-height: 1em;
+}
+body > footer {
+  background-color: rgb(55, 99, 154);
+  overflow: hidden;
+  padding-bottom: 1em;
+}
+#info {
+  color: rgb(178, 203, 204);
+  font-size: 0.9em;
+  font-family: sans-serif;
+}
+#info ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1.5em;
+}
+#info ul li a::before {
+  content: '\00BB  ';
+}
+#info a {
+  color: #fff;
+  text-decoration: none;
+}
+#info a:hover, #info a:active {
+  text-decoration: underline;
+}
+#info aside {
+  display: inline-block;
+  float: left;
+  margin-right: 4em;
+}
+#copyright {
+  clear: both;
+}
+.list > fieldset {
+  background-color: rgb(31, 61, 99);
+  padding-left: 1em;
+  padding-right: 1em;
+}
+.list {
+  float: right;
+}
+.panel {
+  width: 40%;
+}
+fieldset fieldset {
+  display: block;
+  margin: 0;
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+fieldset fieldset legend {
+  line-height: 2em;
+}
+.list fieldset fieldset{
+  border-top: 1px solid rgb(61, 91, 129);
+}
+.list > input.tab {
+  display: none;
+}
+.tab.review:checked ~ fieldset fieldset {
+  display: block !important;
+}
+.tab:checked:nth-of-type(1) ~ fieldset fieldset:not(:nth-of-type(1)),
+.tab:checked:nth-of-type(2) ~ fieldset fieldset:not(:nth-of-type(2)),
+.tab:checked:nth-of-type(3) ~ fieldset fieldset:not(:nth-of-type(3)),
+.tab:checked:nth-of-type(4) ~ fieldset fieldset:not(:nth-of-type(4)),
+.tab:checked:nth-of-type(5) ~ fieldset fieldset:not(:nth-of-type(5)),
+.tab:checked:nth-of-type(6) ~ fieldset fieldset:not(:nth-of-type(6)) {
+  display: none;
+}
+label.tabnav {
+  background-color: rgb(255, 125, 64) !important;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  height: 2.4em !important;
+  line-height: 2.4em !important;
+  padding: 0 0.5em !important;
+  color: #fff !important;
+  margin-top: 0.5em !important;
+}
+.review:checked ~ fieldset .tabnav, .tab:not(.review):checked ~ fieldset .tabsubmit {
+  display: none;
+}

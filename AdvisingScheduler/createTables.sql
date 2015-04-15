@@ -110,7 +110,7 @@ SELECT advisor_id, advisor, student, NULL, student_email, student_phone, reason,
 ORDER BY time;
 
 CREATE VIEW available_slot AS
-SELECT  slot.id, department.name, concat(user.fname, ' ', user.lname) AS advisor_name, user.rank, starttime AS time
+SELECT slot.id, department.id as dept_id, department.name as dept_name, concat(user.fname, ' ', user.lname) AS advisor_name, user.rank, starttime AS time
 FROM slot, advisor, department, user
 WHERE slot.id NOT IN (SELECT DISTINCT slotid FROM appointment) AND starttime > now() AND advisor.id = slot.advisorid AND department.id = advisor.departmentid AND user.id = advisor.userid
 ORDER BY starttime;

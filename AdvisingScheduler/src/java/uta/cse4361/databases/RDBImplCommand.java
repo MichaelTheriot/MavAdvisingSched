@@ -41,7 +41,6 @@ public abstract class RDBImplCommand {
         System.out.println("Connecting MySQL DB");
         Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        //conn = DriverManager.getConnection("jdbc:derby://localhost:1527/advising;create=true;user=advising;password=advising");
     }
 
     protected void disconnectDB() {

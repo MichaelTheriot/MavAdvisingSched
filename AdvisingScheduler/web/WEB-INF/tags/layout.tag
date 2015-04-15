@@ -1,28 +1,28 @@
-<%-- 
-    Document   : layout
-    Created on : Apr 7, 2015, 3:00:45 PM
-    Author     : Michael
---%>
-
-<%@tag description="Page layout" pageEncoding="UTF-8"%>
+<%@tag description="Page template" pageEncoding="UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@attribute name="rank" required="true" type="java.lang.Integer"%>
 <%@attribute name="pagetitle" %>
-<%@attribute name="script" fragment="true" %>
+<%
+    if(pagetitle == null) {
+        pagetitle = "UTA Advising";
+    }
+%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title><%= pagetitle != null ? pagetitle : "UTA Advising" %></title>
-        <meta charset='UTF-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
-        <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
-        <jsp:include page='/WEB-INF/views/scripts.jsp' />
-        <jsp:invoke fragment="script"/>
-    </head>
-    <body>
-        <jsp:include page='/WEB-INF/views/navigationbar.jsp' />
-        <jsp:include page='/WEB-INF/views/header.jsp' />
-        <div id='wrapper'>
-            <jsp:doBody/>
-        </div>
-        <jsp:include page='/WEB-INF/views/footer.jsp' />
-    </body>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= pagetitle %></title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" href="css/calendar.css" />
+  </head>
+  <body>
+    <t:header pagetitle="<%= pagetitle %>" rank="<%= rank %>" />
+    <main>
+      <div id="content">
+        <jsp:doBody/>
+      </div>
+    </main>
+    <t:footer />
+  </body>
 </html>
