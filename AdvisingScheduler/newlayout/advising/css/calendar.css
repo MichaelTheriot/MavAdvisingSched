@@ -1,0 +1,51 @@
+fieldset.radioblocks table {
+  table-layout: fixed;
+  width: 100%;
+  background-color: #1a3151;
+  background-color: transparent;
+}
+fieldset.radioblocks * ~ td, fieldset.radioblocks * ~ th {
+  border-left: 1px solid #244672;
+}
+fieldset.radioblocks tr ~ tr td, fieldset.radioblocks tr ~ tr th {
+  border-top: 1px solid #244672;
+}
+fieldset.radioblocks table caption {
+  background-color: #3566a7;
+  border-bottom: 1px solid #244672;
+  padding: 1em 0;
+  font-weight: bold;
+}
+fieldset.radioblocks td:not([colspan]) {
+  text-align: center;
+  background-color: hsl(214, 10%, 60%);
+  color: #fff;
+  height: 3.5em;
+}
+fieldset.radioblocks label {
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  height: 100%;
+  line-height: 3.5em;
+  background-color: #244672;
+  background-color: #fff;
+  color: #fff;
+  color: #333;
+}
+fieldset.radioblocks label:hover {
+  background-color: rgb(222, 222, 222);
+}
+fieldset.radioblocks input[type="radio"] {
+  display: none;
+}
+fieldset.radioblocks :checked  + label {
+  background-color: rgb(255, 125, 64);
+  color: #fff;
+}
+fieldset.radioblocks th {
+  height: 2em;
+  vertical-align: middle;
+  background-color: #3566a7;
+  font-weight: normal;
+}

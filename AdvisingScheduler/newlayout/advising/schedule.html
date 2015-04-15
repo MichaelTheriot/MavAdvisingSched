@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>UTA Advisor Scheduling</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" href="css/calendar.css" />
+  </head>
+  <body>
+    <header>
+      <h1>UTA Advisor Scheduling</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/schedule" class="sel">Schedule</a></li>
+          <li><a href="/register">Register</a></li>
+          <li><a href="/register">Register</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div id="content">
+        <form class="list panel">
+        <input class="tab" id="s_tab1" type="radio" name="tab" checked />
+        <input class="tab" id="s_tab2" type="radio" name="tab" />
+        <input class="tab" id="s_tab3" type="radio" name="tab" />
+        <input class="tab" id="s_tab4" type="radio" name="tab" />
+        <input class="tab" id="s_tab5" type="radio" name="tab" />
+        <input class="tab review" id="s_tab6" type="radio" name="tab" />
+        <fieldset>
+          <fieldset>
+            <legend>Enter student information</legend>
+            <ol>
+              <li>
+                <label for="s_dept">Department</label>
+                <select name="dept" id="s_dept">
+                  <option disabled selected>-- Select a department --</option>
+                  <option value="cse">Computer Science and Engineering</option>
+                </select>
+              </li>
+              <li>
+                <label for="s_major">Major</label>
+                <select name="major" id="s_major">
+                  <option disabled selected>-- Select a major --</option>
+                  <option value="undecided">Undecided</option>
+                  <option value="cs">Computer Science</option>
+                  <option value="se">Software Engineering</option>
+                  <option value="ce">Computer Engineering</option>
+                  <option value="other">Other</option>
+                </select>
+              </li>
+              <li>
+                <label for="s_advisor">Advisor</label>
+                <select name="advisor" id="s_advisor" disabled>
+                  <option disabled selected>----</option>
+                </select>
+              </li>
+            </ol>
+            <label class="tabnav" for="s_tab2">Next</label>
+          </fieldset>
+          <fieldset class="radioblocks">
+            <legend>Select a month</legend>
+            <table>
+              <caption>2015</caption>
+              <tbody>
+                <tr>
+                  <td><input type="radio" name="month" id="s_jan" /><label for="s_jan">Jan</label></td>
+                  <td><input type="radio" name="month" id="s_feb" /><label for="s_feb">Feb</label></td>
+                  <td><input type="radio" name="month" id="s_mar" /><label for="s_mar">Mar</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="month" id="s_apr" /><label for="s_apr">Apr</label></td>
+                  <td><input type="radio" name="month" id="s_may" /><label for="s_may">May</label></td>
+                  <td><input type="radio" name="month" id="s_jun" /><label for="s_jun">Jun</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="month" id="s_jul" /><label for="s_jul">Jul</label></td>
+                  <td><input type="radio" name="month" id="s_aug" /><label for="s_aug">Aug</label></td>
+                  <td><input type="radio" name="month" id="s_sep" /><label for="s_sep">Sep</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="month" id="s_oct" /><label for="s_oct">Oct</label></td>
+                  <td><input type="radio" name="month" id="s_nov" /><label for="s_nov">Nov</label></td>
+                  <td><input type="radio" name="month" id="s_dec" /><label for="s_dec">Dec</label></td>
+                </tr>
+              </tbody>
+            </table>
+            <label class="tabnav" for="s_tab3">Next</label>
+          </fieldset>
+          <fieldset class="radioblocks">
+            <legend>Select a date</legend>
+            <table>
+              <caption>January</caption>
+              <tbody>
+                <tr>
+                  <th>Sun</th>
+                  <th>Mon</th>
+                  <th>Tue</th>
+                  <th>Wed</th>
+                  <th>Thu</th>
+                  <th>Fri</th>
+                  <th>Sat</th>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>5</td>
+                  <td>6</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>9</td>
+                  <td>10</td>
+                  <td><input type="radio" name="date" id="s_date11" /><label for="s_date11">11</label></td>
+                  <td><input type="radio" name="date" id="s_date12" /><label for="s_date12">12</label></td>
+                  <td><input type="radio" name="date" id="s_date13" /><label for="s_date13">13</label></td>
+                  <td><input type="radio" name="date" id="s_date14" /><label for="s_date14">14</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="date" id="s_date15" /><label for="s_date15">15</label></td>
+                  <td><input type="radio" name="date" id="s_date16" /><label for="s_date16">16</label></td>
+                  <td><input type="radio" name="date" id="s_date17" /><label for="s_date17">17</label></td>
+                  <td><input type="radio" name="date" id="s_date18" /><label for="s_date18">18</label></td>
+                  <td><input type="radio" name="date" id="s_date19" /><label for="s_date19">19</label></td>
+                  <td><input type="radio" name="date" id="s_date20" /><label for="s_date20">20</label></td>
+                  <td><input type="radio" name="date" id="s_date21" /><label for="s_date21">21</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="date" id="s_date22" /><label for="s_date22">22</label></td>
+                  <td><input type="radio" name="date" id="s_date23" /><label for="s_date23">23</label></td>
+                  <td><input type="radio" name="date" id="s_date24" /><label for="s_date24">24</label></td>
+                  <td><input type="radio" name="date" id="s_date25" /><label for="s_date25">25</label></td>
+                  <td><input type="radio" name="date" id="s_date26" /><label for="s_date26">26</label></td>
+                  <td><input type="radio" name="date" id="s_date27" /><label for="s_date27">27</label></td>
+                  <td><input type="radio" name="date" id="s_date28" /><label for="s_date28">28</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="date" id="s_date29" /><label for="s_date29">29</label></td>
+                  <td><input type="radio" name="date" id="s_date30" /><label for="s_date30">30</label></td>
+                  <td><input type="radio" name="date" id="s_date31" /><label for="s_date31">31</label></td>
+                  <td colspan="4"></td>
+                </tr>
+              </tbody>
+            </table>
+            <label class="tabnav" for="s_tab4">Next</label>
+          </fieldset>
+          <fieldset class="radioblocks">
+            <legend>Select a time slot</legend>
+            <table>
+              <caption>Time slots</caption>
+              <tbody>
+                <tr>
+                  <td><input type="radio" name="slot" id="s_0000" /><label for="s_0000">12:00 AM</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="slot" id="s_0030" /><label for="s_0030">12:30 AM</label></td>
+                </tr>
+                <tr>
+                  <td><input type="radio" name="slot" id="s_0100" /><label for="s_0100">01:00 AM</label></td>
+                </tr>
+              </tbody>
+            </table>
+            <label class="tabnav" for="s_tab5">Next</label>
+          </fieldset>
+          <fieldset>
+            <legend>Enter appointment details</legend>
+            <ol>
+              <li>
+                <label for="s_reason">Reason</label>
+                <input type="text" name="reason" id="s_reason" placeholder="Enter a reason..." />
+              </li>
+              <li>
+                <label for="s_info">Additional Information</label>
+                <textarea name="info" id="s_info" placeholder="Enter additional information (optional)..." /></textarea>
+              </li>
+            </ol>
+            <label class="tabnav" for="s_tab6">Review</label>
+          </fieldset>
+          <fieldset>
+            <legend>Review and submit</legend>
+            <input class="tabsubmit" type="submit" value="Schedule Appointment" />
+          </fieldset>
+          </fieldset>
+        </form>
+        <h2>Schedule an Appointment</h2>
+        <p>Use this form to schedule an appointment with an advisor.</p>
+        <h3>Enter Student Information</h3>
+        <p>Please fill out some information about the advising you are seeking.</p>
+        <h3>Select a Period</h3>
+        <p>Select the month you are seeking advising.</p>
+        <h3>Select a Date</h3>
+        <p>Select an available date for advising.</p>
+        <h3>Select a Time</h3>
+        <p>Select an available time slot for the chosen advisor.</p>
+      </div>
+    </main>
+    <footer>
+      <div id="info">
+        <aside>
+          <h3>Helpful Links</h3>
+          <ul>
+            <li><a href="/">UTA Home Page</a></li>
+            <li><a href="/">College of Engineering</a></li>
+            <li><a href="/">CSE Advising</a></li>
+          </ul>
+        </aside>
+        <aside>
+          <h3>General UTA Info</h3>
+          <p>University of Texas at Arlington<br>UTA Blvd. &amp; Cooper St.<br>Arlington, Texas 76001</p>
+        </aside>
+      </div>
+    </footer>
+  </body>
+</html>
