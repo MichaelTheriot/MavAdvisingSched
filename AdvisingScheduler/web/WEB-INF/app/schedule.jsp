@@ -1,3 +1,8 @@
+<%@page import="uta.cse4361.businessobjects.SlotMonth"%>
+<%@page import="java.time.YearMonth"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="uta.cse4361.businessobjects.Slots"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/tools/sessionimport.jsp"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -7,21 +12,34 @@
     }
     String  dept = request.getParameter("dept"),
            major = request.getParameter("major"),
-           month = request.getParameter("month"),
             date = request.getParameter("date"),
             slot = request.getParameter("slot"),
           reason = request.getParameter("reason"),
             desc = request.getParameter("desc");
 
+    int viewmonth = 0;
+    if(request.getParameter("viewmonth") != null) {
+        viewmonth = Integer.parseInt(request.getParameter("viewmonth"));
+    }
+
     request.setAttribute("dept", dept);
     request.setAttribute("major", major);
-    request.setAttribute("month", month);
     request.setAttribute("date", date);
     request.setAttribute("slot", slot);
     request.setAttribute("reason", reason);
     request.setAttribute("desc", desc);
+    request.setAttribute("viewmonth", viewmonth);
 %>
 <% if(dept == null || major == null) { %>
+<jsp:useBean id="department" class="uta.cse4361.beans.DepartmentBean"/>
+<%
+    ArrayList<String> list = department.getList();
+    String optionsHTML = "";
+    for(int i = 0; i < list.size(); i += 2) {
+        optionsHTML += "<option value=\"" + list.get(i) + "\">" + list.get(i + 1) + "</option>\n";
+    }
+    request.setAttribute("optionsHTML", optionsHTML);
+%>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
         <form class="list panel" action="/schedule" method="POST">
@@ -33,7 +51,7 @@
                             <label for="s_dept">Department</label>
                             <select name="dept" id="s_dept" required>
                                 <option disabled selected>-- Select a department --</option>
-                                <option value="cse">Computer Science and Engineering</option>
+                                ${optionsHTML}
                             </select>
                         </li>
                         <li>
@@ -48,28 +66,22 @@
         <p>Please use the form to the right to schedule an appointment.</p>
     </jsp:body>
 </t:layout>
-<% } else if(dept == null || major == null) { %>
+<% } else if(date == null) { %>
+<jsp:useBean id="slotsbean" class="uta.cse4361.beans.SlotsBean"/>
+<%
+    slotsbean.setDept(Integer.parseInt(request.getParameter("dept")));
+    Slots slots = slotsbean.getSlots();
+    String optionsHTML = "";
+    if(slots == null) {
+%>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
         <form class="list panel" action="/schedule" method="POST">
             <fieldset>
-                <fieldset>
-                    <legend>Enter basic information</legend>
-                    <ol>
-                        <li>
-                            <label for="s_dept">Department</label>
-                            <select name="dept" id="s_dept" required>
-                                <option disabled selected>-- Select a department --</option>
-                                <option value="cse">Computer Science and Engineering</option>
-                            </select>
-                        </li>
-                        <li>
-                            <t:forminput name="major" label="Major" type="text" placeholder="Enter your major" required="true" />
-                        </li>
-                        <li>
-                            <input type="submit" value="Next" />
-                        </li>
-                    </ol>
+                <fieldset class="radioblocks">
+                    <legend>Select a date</legend>
+                    <p>There are no advising slots available for this department at this time.</p>
+                    <input type="submit" value="Back" />
                 </fieldset>
             </fieldset>
         </form>
@@ -77,15 +89,62 @@
         <p>Please use the form to the right to schedule an appointment.</p>
     </jsp:body>
 </t:layout>
-<% } else if(month == null) { %>
+<%
+    } else {
+        YearMonth[] yearMonths = slots.getYearMonths();
+        viewmonth = viewmonth % yearMonths.length;
+        int viewYear = yearMonths[viewmonth].getYear();
+        int viewMonth = yearMonths[viewmonth].getMonthValue();
+        Calendar cal = Calendar.getInstance();
+        SlotMonth month = new SlotMonth(viewYear, viewMonth - 1, slots.getTime());
+        int[] slotDays = month.getSlotDays();
+        cal.set(viewYear, viewMonth - 1, 1);
+        cal.set(Calendar.DATE, (1 - month.getFirstDay()) + 1);
+
+        optionsHTML = "<table>"
+                    + "<caption>" + month.getName() + " " + viewYear + "</caption>"
+                    + "<tbody>";
+
+        int slotC = 0;
+        for(int i = 0; i < 42; i++) {
+            if(cal.get(Calendar.DAY_OF_WEEK) == 1) {
+                optionsHTML += "<tr>";
+            }
+            if(cal.get(Calendar.MONTH) != month.getMonth()) {
+                optionsHTML += "<td class=\"non\">" + cal.get(Calendar.DATE) + "</td>";
+            } else if(slotC < slotDays.length && cal.get(Calendar.DATE) == slotDays[slotC]) {
+                String uniqueId = "s-" + cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.DAY_OF_MONTH);
+                optionsHTML += "<td>"
+                            +  "<input type=\"radio\" name=\"date\" id=\"" + uniqueId + "\" value=\"" + uniqueId + "\" />"
+                            +  "<label for=\"" + uniqueId + "\">" + cal.get(Calendar.DATE) + "</label></td>";
+                slotC++;
+            } else {
+                optionsHTML += "<td>" + cal.get(Calendar.DATE) + "</td>";
+            }
+            if(cal.get(Calendar.DAY_OF_WEEK) == 7) {
+                optionsHTML += "</tr>";
+            }
+            cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 1);
+            if(cal.get(Calendar.MONTH) > month.getMonth() && cal.get(Calendar.DAY_OF_WEEK) == 1) {
+                break;
+            }
+        }
+        optionsHTML += "</tbody></table>";
+
+    request.setAttribute("optionsHTML", optionsHTML);
+    request.setAttribute("viewmonth", Integer.toString(viewmonth));
+%>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
         <form class="list panel" action="/schedule" method="POST">
             <input type="hidden" name="dept" value="${dept}" />
             <input type="hidden" name="major" value="${major}" />
+            <input type="hidden" name="viewmonth" value="${viewmonth}" />
             <fieldset>
                 <fieldset class="radioblocks">
-                    <legend>Select a month</legend>
+                    <legend>Select a date</legend>
+                    ${optionsHTML}
+                    <!-- 
                     <table>
                       <caption>2015</caption>
                       <tbody>
@@ -110,7 +169,7 @@
                           <td><input type="radio" name="month" id="s_dec" /><label for="s_dec">Dec</label></td>
                         </tr>
                       </tbody>
-                    </table>
+                    </table>-->
                     <input type="submit" value="Next" />
                 </fieldset>
             </fieldset>
@@ -119,6 +178,7 @@
         <p>Please use the form to the right to schedule an appointment.</p>
     </jsp:body>
 </t:layout>
+<% } %>
 <% } else if(date == null) { %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>

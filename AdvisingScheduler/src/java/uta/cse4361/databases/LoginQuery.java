@@ -1,9 +1,6 @@
 package uta.cse4361.databases;
 
 import java.sql.SQLException;
-import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import uta.cse4361.businessobjects.Account;
 
 /**
@@ -38,11 +35,15 @@ public class LoginQuery extends RDBImplCommand {
         }
     }
 
-    public void processResult() {
+    public void processResult() throws SQLException {
         if(success == 1) {
             try {
                 while(resultSet.next()) {
-                    result = new Account(resultSet.getInt("id"), resultSet.getString("email"), resultSet.getString("fname"), resultSet.getString("lname"), resultSet.getString("phone"), resultSet.getInt("rank"));
+                    if(resultSet.getInt("NUM") > 0) {
+                        result = new Account(resultSet.getInt("id"), resultSet.getString("email"), resultSet.getString("fname"), resultSet.getString("lname"), resultSet.getString("phone"), resultSet.getInt("rank"));
+                    } else {
+                        result = null;
+                    }
                 }
             } catch (SQLException e) {
                 System.out.println(e);

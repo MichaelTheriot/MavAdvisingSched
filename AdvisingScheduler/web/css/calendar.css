@@ -49,3 +49,7 @@ fieldset.radioblocks th {
   background-color: #3566a7;
   font-weight: normal;
 }
+fieldset.radioblocks td.non {
+  background-color: rgb(86, 106, 130);
+  color: #aaa;
+}
