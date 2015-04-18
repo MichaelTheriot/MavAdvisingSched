@@ -13,8 +13,8 @@
     <meta charset="UTF-8">
     <title><%= pagetitle %></title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="css/main.css" />
-    <link rel="stylesheet" type="text/css" href="css/calendar.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/calendar.css" />
   </head>
   <body>
     <t:header pagetitle="UTA Advisor Scheduling" rank="<%= rank %>" />

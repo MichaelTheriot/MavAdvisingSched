@@ -6,18 +6,18 @@
       <h1>${pagetitle}</h1>
       <nav>
         <ul>
-<t:navlink url="/" name="Home" />
+<t:navlink url="${pageContext.request.contextPath}/" name="Home" />
 <% if(rank < 1) { %>
-<t:navlink url="/schedule" name="Schedule Appointment" />
+<t:navlink url="${pageContext.request.contextPath}/schedule" name="Schedule Appointment" />
 <% }
    if(rank == -1) { %>
-<t:navlink url="/login" name="Sign in" />
-<t:navlink url="/register" name="Register" />
+<t:navlink url="${pageContext.request.contextPath}/login" name="Sign in" />
+<t:navlink url="${pageContext.request.contextPath}/register" name="Register" />
 <% } else if(rank == 0) { %>
-<t:navlink url="/appointments" name="View Appointments" />
+<t:navlink url="${pageContext.request.contextPath}/appointments" name="View Appointments" />
 <% } %>
 <% if(rank >= 0) { %>
-<t:navlink url="/logout" name="Sign Out" />
+<t:navlink url="${pageContext.request.contextPath}/logout" name="Sign Out" />
 <% } %>
         </ul>
       </nav>

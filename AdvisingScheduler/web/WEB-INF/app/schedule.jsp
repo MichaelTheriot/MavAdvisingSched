@@ -1,7 +1,7 @@
+<%@page import="uta.cse4361.businessobjects.Slot"%>
 <%@page import="uta.cse4361.businessobjects.SlotMonth"%>
 <%@page import="java.time.YearMonth"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="uta.cse4361.businessobjects.Slots"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/tools/sessionimport.jsp"%>
@@ -42,7 +42,7 @@
 %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
-        <form class="list panel" action="/schedule" method="POST">
+        <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
             <fieldset>
                 <fieldset>
                     <legend>Enter basic information</legend>
@@ -69,14 +69,13 @@
 <% } else if(date == null) { %>
 <jsp:useBean id="slotsbean" class="uta.cse4361.beans.SlotsBean"/>
 <%
-    slotsbean.setDept(Integer.parseInt(request.getParameter("dept")));
-    Slots slots = slotsbean.getSlots();
+    Slot[] slots = slotsbean.getSlotsByDept(Integer.parseInt(dept));
     String optionsHTML = "";
     if(slots == null) {
 %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
-        <form class="list panel" action="/schedule" method="POST">
+        <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
             <fieldset>
                 <fieldset class="radioblocks">
                     <legend>Select a date</legend>
@@ -91,7 +90,7 @@
 </t:layout>
 <%
     } else {
-        YearMonth[] yearMonths = slots.getYearMonths();
+        /*YearMonth[] yearMonths = slots.getYearMonths();
         viewmonth = viewmonth % yearMonths.length;
         int viewYear = yearMonths[viewmonth].getYear();
         int viewMonth = yearMonths[viewmonth].getMonthValue();
@@ -101,25 +100,45 @@
         cal.set(viewYear, viewMonth - 1, 1);
         cal.set(Calendar.DATE, (1 - month.getFirstDay()) + 1);
 
-        optionsHTML = "<table>"
+        optionsHTML = "<table class=\"calendar\">"
                     + "<caption>" + month.getName() + " " + viewYear + "</caption>"
-                    + "<tbody>";
+                    + "<tbody>"
+                    + "<tr>"
+                    + "<th>Sun</th>"
+                    + "<th>Mon</th>"
+                    + "<th>Tue</th>"
+                    + "<th>Wed</th>"
+                    + "<th>Thu</th>"
+                    + "<th>Fri</th>"
+                    + "<th>Sat</th>"
+                    + "</tr>";
 
         int slotC = 0;
         for(int i = 0; i < 42; i++) {
             if(cal.get(Calendar.DAY_OF_WEEK) == 1) {
-                optionsHTML += "<tr>";
+                optionsHTML += "<tr class=\"min\">";
+                long ts = cal.getTimeInMillis();
+                for(int j = 0; j < 7; j++) {
+                    optionsHTML += "<td";
+                    if(cal.get(Calendar.MONTH) != month.getMonth()) {
+                        optionsHTML += " class=\"non\"";
+                    }
+                    optionsHTML += ">" + cal.get(Calendar.DAY_OF_MONTH) + "</td>";
+                    cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 1);
+                }
+                cal.setTimeInMillis(ts);
+                optionsHTML += "</tr><tr>";
             }
             if(cal.get(Calendar.MONTH) != month.getMonth()) {
-                optionsHTML += "<td class=\"non\">" + cal.get(Calendar.DATE) + "</td>";
+                optionsHTML += "<td class=\"non\"></td>";
             } else if(slotC < slotDays.length && cal.get(Calendar.DATE) == slotDays[slotC]) {
                 String uniqueId = "s-" + cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.DAY_OF_MONTH);
                 optionsHTML += "<td>"
                             +  "<input type=\"radio\" name=\"date\" id=\"" + uniqueId + "\" value=\"" + uniqueId + "\" />"
-                            +  "<label for=\"" + uniqueId + "\">" + cal.get(Calendar.DATE) + "</label></td>";
+                            +  "<label for=\"" + uniqueId + "\"><span class=\"heading\">3:00 - 4:00 pm</span> Eric Becker</label></td>";
                 slotC++;
             } else {
-                optionsHTML += "<td>" + cal.get(Calendar.DATE) + "</td>";
+                optionsHTML += "<td></td>";
             }
             if(cal.get(Calendar.DAY_OF_WEEK) == 7) {
                 optionsHTML += "</tr>";
@@ -132,17 +151,17 @@
         optionsHTML += "</tbody></table>";
 
     request.setAttribute("optionsHTML", optionsHTML);
-    request.setAttribute("viewmonth", Integer.toString(viewmonth));
+    request.setAttribute("viewmonth", Integer.toString(viewmonth));*/
 %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
-        <form class="list panel" action="/schedule" method="POST">
+        <form class="wide" action="${pageContext.request.contextPath}/schedule" method="POST">
             <input type="hidden" name="dept" value="${dept}" />
             <input type="hidden" name="major" value="${major}" />
             <input type="hidden" name="viewmonth" value="${viewmonth}" />
-            <fieldset>
+            
                 <fieldset class="radioblocks">
-                    <legend>Select a date</legend>
+                    <legend>Select an Appointment</legend>
                     ${optionsHTML}
                     <!-- 
                     <table>
@@ -172,7 +191,7 @@
                     </table>-->
                     <input type="submit" value="Next" />
                 </fieldset>
-            </fieldset>
+            
         </form>
         <h1>Schedule an Appointment</h1>
         <p>Please use the form to the right to schedule an appointment.</p>
@@ -182,7 +201,7 @@
 <% } else if(date == null) { %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
-        <form class="list panel" action="/schedule" method="POST">
+        <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
             <input type="hidden" name="dept" value="${dept}" />
             <input type="hidden" name="major" value="${major}" />
             <input type="hidden" name="month" value="${month}" />
@@ -256,7 +275,7 @@
 <% } else if(slot == null) { %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
-        <form class="list panel" action="/schedule" method="POST">
+        <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
             <input type="hidden" name="dept" value="${dept}" />
             <input type="hidden" name="major" value="${major}" />
             <input type="hidden" name="month" value="${month}" />
@@ -289,7 +308,7 @@
 <% } else if(reason == null && rank == -1) { %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
-        <form class="list panel" action="/schedule" method="POST">
+        <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
             <input type="hidden" name="dept" value="${dept}" />
             <input type="hidden" name="major" value="${major}" />
             <input type="hidden" name="month" value="${month}" />
@@ -328,7 +347,7 @@
 <% } else if(reason == null) { %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
-        <form class="list panel" action="/schedule" method="POST">
+        <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
             <input type="hidden" name="dept" value="${dept}" />
             <input type="hidden" name="major" value="${major}" />
             <input type="hidden" name="month" value="${month}" />

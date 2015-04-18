@@ -208,3 +208,9 @@ a {
 a:hover {
   text-decoration: underline;
 }
+form.wide {
+  display: block;
+  float: none;
+  margin: auto;
+  background: none;
+}

@@ -4,11 +4,11 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%
     if(rank >= 0) {
-        response.sendRedirect("/");
+        response.sendRedirect(request.getContextPath() + "/");
     } else if(request.getParameter("email") == null) {
 %>
 <t:layout pagetitle="Sign in" rank="<%= rank %>">
-    <form class="panel" action="/login" method="POST">
+    <form class="panel" action="${pageContext.request.contextPath}/login" method="POST">
           <fieldset>
             <legend>Access your account</legend>
             <ol>
@@ -43,7 +43,7 @@
         }
     }
 %>
-<t:redirect pagetitle="Sign in" url="/">
+<t:redirect pagetitle="Sign in" url="${pageContext.request.contextPath}/">
   ${result}
 </t:redirect>
 <% } %>

@@ -4,7 +4,7 @@
 <% if(rank < 0) { %>
 <t:layout rank="<%= rank %>">
     <jsp:body>
-        <form class="right panel" action="/login" method="POST">
+        <form class="right panel" action="${pageContext.request.contextPath}/login" method="POST">
           <fieldset>
             <legend>Access your account</legend>
             <ol>

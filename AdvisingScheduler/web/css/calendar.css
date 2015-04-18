@@ -16,11 +16,47 @@ fieldset.radioblocks table caption {
   padding: 1em 0;
   font-weight: bold;
 }
-fieldset.radioblocks td:not([colspan]) {
-  text-align: center;
-  background-color: hsl(214, 10%, 60%);
+fieldset.radioblocks input[type="radio"] {
+  display: none;
+}
+fieldset.radioblocks th {
+  height: 28px;
+  vertical-align: middle;
+  background-color: #3566a7;
+  font-weight: normal;
+}
+.wide .calendar td {
+  height: 96px;
+}
+.calendar td {
+  vertical-align: top;
+}
+.calendar tr.min td {
+  background-color: hsl(214, 55%, 60%);
+  font-family: monospace;
+  line-height: 28px;
+  height: 28px;
+  font-size: 12px;
   color: #fff;
-  height: 3.5em;
+  text-align: center;
+  vertical-align: middle;
+}
+fieldset.radioblocks td.non {
+  background-color: hsl(214, 0%, 40%);
+  background-color: hsl(214, 10%, 60%);
+  background-color: hsl(214, 0%, 75%);
+  color: #aaa;
+}
+fieldset.radioblocks tr.min td.non {
+  background-color: hsl(214, 0%, 50%);
+  background-color: hsl(214, 13%, 68%);
+  background-color: hsl(214, 0%, 55%);
+  color: #fff;
+}
+fieldset.radioblocks td {
+  background-color: hsl(214, 10%, 60%);
+  background-color: #fff;
+  color: #fff;
 }
 fieldset.radioblocks label {
   display: block;
@@ -32,24 +68,36 @@ fieldset.radioblocks label {
   background-color: #fff;
   color: #fff;
   color: #333;
+  padding: 0;
+}
+fieldset.radioblocks .calendar label {
+  line-height: 1em;
+  padding: 0.5em;
+  display: block;
+  height: auto;
+  color: #fff;
+  text-align: left;
+  font-size: 0.9em;
+  border-radius: 2px;
+  margin: 2px;
+  background-color: hsl(214, 80%, 50%);
+}
+fieldset.radioblocks .calendar label:hover {
+  background-color: hsl(214, 100%, 60%);
+}
+fieldset.radioblocks .calendar [disabled] + label {
+  background-color: hsl(214, 0%, 60%);
+  color: #fff;
+}
+.calendar .heading {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
 }
 fieldset.radioblocks label:hover {
   background-color: rgb(222, 222, 222);
 }
-fieldset.radioblocks input[type="radio"] {
-  display: none;
-}
 fieldset.radioblocks :checked  + label {
-  background-color: rgb(255, 125, 64);
+  background-color: rgb(255, 125, 64) !important;
   color: #fff;
-}
-fieldset.radioblocks th {
-  height: 2em;
-  vertical-align: middle;
-  background-color: #3566a7;
-  font-weight: normal;
-}
-fieldset.radioblocks td.non {
-  background-color: rgb(86, 106, 130);
-  color: #aaa;
 }
