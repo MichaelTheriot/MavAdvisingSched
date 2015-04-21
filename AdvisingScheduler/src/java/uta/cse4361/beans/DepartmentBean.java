@@ -6,6 +6,7 @@
 package uta.cse4361.beans;
 
 import java.util.ArrayList;
+import uta.cse4361.businessobjects.Department;
 import uta.cse4361.databases.DepartmentQuery;
 
 /**
@@ -13,14 +14,13 @@ import uta.cse4361.databases.DepartmentQuery;
  * @author Michael
  */
 public class DepartmentBean {
-    private ArrayList<String> list;
 
     public DepartmentBean() {
     }
 
-    public ArrayList<String> getList() {
+    public Department[] getDepartments() {
         DepartmentQuery query = new DepartmentQuery();
         query.execute();
-        return (ArrayList<String>) query.getResult();
+        return (Department[]) query.getResult();
     }
 }

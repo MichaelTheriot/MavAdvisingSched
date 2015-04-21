@@ -6,8 +6,6 @@
 package uta.cse4361.databases;
 
 import java.sql.*;
-import java.util.Properties;
-import java.util.concurrent.Callable;
 
 /**
  *
@@ -22,30 +20,44 @@ public abstract class RDBImplCommand {
     static final String USER = "root";
     static final String PASS = "er1ja@18xs@3";
 
+    protected String sqlQuery;
     protected Connection conn;
     protected PreparedStatement statement;
     protected ResultSet resultSet;
-    protected int success;
+    protected boolean success;
     protected Object result;
 
     public void execute() {
+        success = false;
         try {
             connectDB();
-            queryDB();
-            disconnectDB();
-        } catch (Exception e) {
+            try {
+                prepareStatement();
+                try {
+                    queryDB();
+                    success = true;
+                } catch(Exception e) {
+                    e.printStackTrace(System.err);
+                } finally {
+                    statement.close();
+                }
+            } catch(Exception e) {
+                e.printStackTrace(System.err);
+            } finally {
+                disconnectDB();
+            }
+        } catch(Exception e) {
             e.printStackTrace(System.err);
-            disconnectDB();
         }
     }
 
-    protected void connectDB() throws Exception {
+    private void connectDB() throws Exception {
         System.out.println("Connecting MySQL DB");
         Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
     }
 
-    protected void disconnectDB() {
+    private void disconnectDB() {
         try {
             conn.close();
         } catch (SQLException e) {
@@ -53,12 +65,16 @@ public abstract class RDBImplCommand {
         }
     }
 
-    public int succeeded() {
+    public boolean succeeded() {
         return success;
     }
 
     public Object getResult() {
         return result;
+    }
+
+    protected void prepareStatement() throws SQLException {
+        statement = conn.prepareStatement(sqlQuery);
     }
 
     public abstract void queryDB() throws SQLException;

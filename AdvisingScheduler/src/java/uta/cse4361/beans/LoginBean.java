@@ -5,7 +5,7 @@
  */
 package uta.cse4361.beans;
 
-import uta.cse4361.businessobjects.Account;
+import uta.cse4361.businessobjects.User;
 import uta.cse4361.databases.LoginQuery;
 
 /**
@@ -19,10 +19,10 @@ public class LoginBean {
     public LoginBean() {
     }
 
-    public Account getUser() {
+    public User getUser() {
         LoginQuery query = new LoginQuery(email, password);
         query.execute();
-        return (Account) query.getResult();
+        return (User) query.getResult();
     }
 
     public String getEmail() {

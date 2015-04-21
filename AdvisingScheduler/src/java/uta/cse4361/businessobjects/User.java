@@ -9,7 +9,7 @@ package uta.cse4361.businessobjects;
  *
  * @author Michael
  */
-public class Account {
+public class User {
     private int id;
     private String email;
     private String fname;
@@ -17,7 +17,7 @@ public class Account {
     private String phone;
     private int rank;
 
-    public Account(int id, String email, String fname, String lname, String phone, int rank) {
+    public User(int id, String email, String fname, String lname, String phone, int rank) {
         this.id = id;
         this.email = email;
         this.fname = fname;

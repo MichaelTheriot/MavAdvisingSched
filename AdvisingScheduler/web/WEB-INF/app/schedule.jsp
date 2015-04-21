@@ -1,78 +1,86 @@
-<%@page import="uta.cse4361.businessobjects.Slot"%>
-<%@page import="uta.cse4361.businessobjects.SlotMonth"%>
-<%@page import="java.time.YearMonth"%>
-<%@page import="java.util.Calendar"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="uta.cse4361.businessobjects.Department"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/tools/sessionimport.jsp"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
 <%
-    if(rank > 0) {
-        response.sendRedirect("/");
-    }
     String  dept = request.getParameter("dept"),
            major = request.getParameter("major"),
-            date = request.getParameter("date"),
             slot = request.getParameter("slot"),
+       viewmonth = request.getParameter("viewmonth"),
           reason = request.getParameter("reason"),
             desc = request.getParameter("desc");
 
-    int viewmonth = 0;
-    if(request.getParameter("viewmonth") != null) {
-        viewmonth = Integer.parseInt(request.getParameter("viewmonth"));
-    }
-
     request.setAttribute("dept", dept);
     request.setAttribute("major", major);
-    request.setAttribute("date", date);
     request.setAttribute("slot", slot);
+    request.setAttribute("viewmonth", viewmonth);
     request.setAttribute("reason", reason);
     request.setAttribute("desc", desc);
-    request.setAttribute("viewmonth", viewmonth);
 %>
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="uta.cse4361.businessobjects.Slot"%>
+<%@page import="uta.cse4361.businessobjects.SlotMonth"%>
+<%@page import="java.util.Calendar"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+
+
+
 <% if(dept == null || major == null) { %>
-<jsp:useBean id="department" class="uta.cse4361.beans.DepartmentBean"/>
-<%
-    ArrayList<String> list = department.getList();
-    String optionsHTML = "";
-    for(int i = 0; i < list.size(); i += 2) {
-        optionsHTML += "<option value=\"" + list.get(i) + "\">" + list.get(i + 1) + "</option>\n";
-    }
-    request.setAttribute("optionsHTML", optionsHTML);
-%>
-<t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
-    <jsp:body>
-        <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
-            <fieldset>
+    <jsp:useBean id="department" class="uta.cse4361.beans.DepartmentBean"/>
+    <%
+        String optionsHTML = "";
+        // <option value="1">Computer Science & Engineering</option>
+        Department[] depts = department.getDepartments();
+        if(depts != null) {
+            for(int i = 0; i < depts.length; i++) {
+                optionsHTML += "<option value=\"" + depts[i].getId() + "\">" + depts[i].getName() + "</option>\n";
+            }
+        }
+        request.setAttribute("optionsHTML", optionsHTML);
+    %>
+    <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
+        <jsp:body>
+            <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
                 <fieldset>
-                    <legend>Enter basic information</legend>
-                    <ol>
-                        <li>
-                            <label for="s_dept">Department</label>
-                            <select name="dept" id="s_dept" required>
-                                <option disabled selected>-- Select a department --</option>
-                                ${optionsHTML}
-                            </select>
-                        </li>
-                        <li>
-                            <t:forminput name="major" label="Major" type="text" placeholder="Enter your major" required="true" />
-                        </li>
+                    <fieldset>
+                        <legend>Enter basic information</legend>
+                        <ol>
+                            <li>
+                                <label for="s_dept">Department</label>
+                                <select name="dept" id="s_dept" required>
+                                    <option disabled selected>-- Select a department --</option>
+                                    ${optionsHTML}
+                                </select>
+                            </li>
+                            <li>
+                                <t:forminput name="major" label="Major" type="text" placeholder="Enter your major" required="true" />
+                            </li>
+                        </ol>
                         <input type="submit" value="Next" />
-                    </ol>
+                    </fieldset>
                 </fieldset>
-            </fieldset>
-        </form>
-        <h1>Schedule an Appointment</h1>
-        <p>Please use the form to the right to schedule an appointment.</p>
-    </jsp:body>
-</t:layout>
-<% } else if(date == null) { %>
-<jsp:useBean id="slotsbean" class="uta.cse4361.beans.SlotsBean"/>
-<%
-    Slot[] slots = slotsbean.getSlotsByDept(Integer.parseInt(dept));
-    String optionsHTML = "";
-    if(slots == null) {
-%>
+            </form>
+            <h1>Schedule an Appointment</h1>
+            <p>Please use the form to the right to schedule an appointment.</p>
+        </jsp:body>
+    </t:layout>
+
+<% } else if(slot == null) { %>
+    <jsp:useBean id="slotsbean" class="uta.cse4361.beans.SlotsBean"/>
+    <%
+        int deptInt = 0;
+        try {
+            deptInt = Integer.parseInt(dept);
+        } catch(NumberFormatException e) {}
+
+        Slot[] slots = slotsbean.getSlotsByDept(deptInt);
+        String optionsHTML = "";
+        if(slots == null) {
+            optionsHTML = "" + slots.length;
+        }
+    %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
         <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
@@ -197,7 +205,6 @@
         <p>Please use the form to the right to schedule an appointment.</p>
     </jsp:body>
 </t:layout>
-<% } %>
 <% } else if(date == null) { %>
 <t:layout pagetitle="Schedule an Appointment" rank="<%= rank %>">
     <jsp:body>
