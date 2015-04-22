@@ -13,7 +13,7 @@ fieldset.radioblocks tr ~ tr td, fieldset.radioblocks tr ~ tr th {
 fieldset.radioblocks table caption {
   background-color: #3566a7;
   border-bottom: 1px solid #244672;
-  padding: 1em 0;
+  line-height: 48px;
   font-weight: bold;
 }
 fieldset.radioblocks input[type="radio"] {
@@ -26,18 +26,17 @@ fieldset.radioblocks th {
   font-weight: normal;
 }
 .wide .calendar td {
-  height: 96px;
+  height: 84px;
 }
 .calendar td {
   vertical-align: top;
 }
 .calendar tr.min td {
   background-color: hsl(214, 55%, 60%);
-  font-family: monospace;
   line-height: 28px;
   height: 28px;
-  font-size: 12px;
   color: #fff;
+  font-size: 12px;
   text-align: center;
   vertical-align: middle;
 }
@@ -56,7 +55,7 @@ fieldset.radioblocks tr.min td.non {
 fieldset.radioblocks td {
   background-color: hsl(214, 10%, 60%);
   background-color: #fff;
-  color: #fff;
+  color: #666;
 }
 fieldset.radioblocks label {
   display: block;
@@ -71,13 +70,13 @@ fieldset.radioblocks label {
   padding: 0;
 }
 fieldset.radioblocks .calendar label {
-  line-height: 1em;
-  padding: 0.5em;
+  line-height: 10px;
+  padding: 6px;
   display: block;
   height: auto;
   color: #fff;
   text-align: left;
-  font-size: 0.9em;
+  font-size: 12px;
   border-radius: 2px;
   margin: 2px;
   background-color: hsl(214, 80%, 50%);
@@ -91,8 +90,13 @@ fieldset.radioblocks .calendar [disabled] + label {
 }
 .calendar .heading {
   display: block;
-  margin-bottom: 0.5em;
+  float: left;
   font-weight: bold;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+.calendar .chk {
+  display: inline-block;
 }
 fieldset.radioblocks label:hover {
   background-color: rgb(222, 222, 222);
@@ -100,4 +104,27 @@ fieldset.radioblocks label:hover {
 fieldset.radioblocks :checked  + label {
   background-color: rgb(255, 125, 64) !important;
   color: #fff;
+}
+.calendar caption {
+  position: relative;
+}
+.calendar .nextbutton, .calendar .previousbutton {
+  position: absolute;
+  display: inline-block;
+  border: none;
+  background: none;
+  top: 0;
+  height: 100%;
+  font-size: 0.9em;
+  padding: 0 16px;
+}
+.calendar .nextbutton {
+  right: 0;
+}
+.calendar .previousbutton {
+  left: 0;
+}
+.calendar .nextbutton:hover, .calendar .previousbutton:hover {
+  
+  text-decoration: underline;
 }

@@ -98,6 +98,7 @@ form input, form select, form textarea {
   float: right;
   width: 100%;
   box-sizing: border-box;
+  background-color: #fff;
 }
 form label {
   display: block;
@@ -115,7 +116,7 @@ form textarea {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
-form select[disabled] {
+form input[disabled], form select[disabled] {
   background-color: #ccc;
 }
 form input[type="submit"] {

@@ -15,6 +15,7 @@ public class User {
     private String fname;
     private String lname;
     private String phone;
+    private String major;
     private int rank;
 
     public User(int id, String email, String fname, String lname, String phone, int rank) {

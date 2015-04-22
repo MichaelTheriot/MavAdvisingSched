@@ -1,13 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="login" class="uta.cse4361.beans.LoginBean"/> 
+<jsp:useBean id="loginbean" class="uta.cse4361.beans.LoginBean"/> 
+<jsp:useBean id="studentbean" class="uta.cse4361.beans.StudentBean"/> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <c:set var="rank" value="${!(empty sessionScope.rank) ? sessionScope.rank : -1}" />
 <c:choose>
     <c:when test="${not empty param.email and rank < 0}">
-        <jsp:setProperty name="login" property="email" value='${param.email}' />
-        <jsp:setProperty name="login" property="password" value='${param.password}' />
-        <c:set var="user" value="${login.getUser()}" />
+        <jsp:setProperty name="loginbean" property="email" value='${param.email}' />
+        <jsp:setProperty name="loginbean" property="password" value='${param.password}' />
+        <c:set var="user" value="${loginbean.getUser()}" />
         <t:redirect pagetitle="Sign in" url="${pageContext.request.contextPath}/">
             <c:choose>
                 <c:when test="${user != null}">
@@ -17,6 +18,13 @@
                     <c:set var="lname" value="${user.getLname()}" scope="session" />
                     <c:set var="phone" value="${user.getPhone()}" scope="session" />
                     <c:set var="rank" value="${user.getRank()}" scope="session" />
+                    <c:if test="${user.getRank() == 0}">
+                        <jsp:setProperty name="studentbean" property="userId" value='${user.getId()}' />
+                        <c:set var="student" value="${studentbean.getStudent()}" />
+                        <c:set var="studentid" value="${student.getStudentId()}" scope="session" />
+                        <c:set var="utastudentid" value="${student.getUtaStudentId()}" scope="session" />
+                        <c:set var="major" value="${student.getMajor()}" scope="session" />
+                    </c:if>
                     You have signed in successfully!
                 </c:when>
                 <c:otherwise>

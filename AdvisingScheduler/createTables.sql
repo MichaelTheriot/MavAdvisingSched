@@ -1,4 +1,6 @@
--- Note studentid is a database variable and utastudentid is the student's UT Arlington student ID
+-- DROP DATABASE IF EXISTS advising;
+-- CREATE SCHEMA advising;
+-- USE advising;
 
 CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT,
@@ -23,7 +25,8 @@ CREATE TABLE advisor (
   userid INT NOT NULL,
   departmentid INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (userid) REFERENCES user(id) ON DELETE CASCADE
+  FOREIGN KEY (userid) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (departmentid) REFERENCES department(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE slot (
@@ -71,16 +74,6 @@ CREATE TABLE student_user (
 ALTER TABLE slot
   ADD UNIQUE unique_index(advisorid, starttime);
 
-ALTER TABLE advisor
-  ADD CONSTRAINT bind_userid_to_advisor
-  FOREIGN KEY (userid)
-  REFERENCES user(id);
-
-ALTER TABLE advisor
-  ADD CONSTRAINT bind_departmentid_to_advisor
-  FOREIGN KEY (departmentid)
-  REFERENCES department(id);
-
 ALTER TABLE student_unregistered
   ADD CONSTRAINT bind_studentid_to_student_unregistered
   FOREIGN KEY (studentid)
@@ -110,7 +103,7 @@ SELECT advisor_id, advisor, student, NULL, student_email, student_phone, reason,
 ORDER BY time;
 
 CREATE VIEW available_slot AS
-SELECT slot.id, department.id as dept_id, department.name as dept_name, concat(user.fname, ' ', user.lname) AS advisor_name, user.rank, starttime AS time
+SELECT slot.id, department.id as dept_id, department.name as dept_name, advisor.id as advisor_id, concat(user.fname, ' ', user.lname) AS advisor_name, user.phone as advisor_phone, user.rank as advisor_rank, starttime AS time
 FROM slot, advisor, department, user
 WHERE slot.id NOT IN (SELECT DISTINCT slotid FROM appointment) AND starttime > now() AND advisor.id = slot.advisorid AND department.id = advisor.departmentid AND user.id = advisor.userid
 ORDER BY starttime;

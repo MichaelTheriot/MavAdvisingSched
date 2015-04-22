@@ -16,12 +16,13 @@ public class SlotQueryByDept extends SlotQuery {
     private int dept;
 
     public SlotQueryByDept(int dept) {
-        this.sqlQuery = "SELECT DISTINCT id, dept_id, dept_name, advisor_name, rank, time FROM available_slot WHERE department = ? ORDER BY time";
+        this.sqlQuery = "SELECT DISTINCT id, dept_id, dept_name, advisor_id, advisor_name, advisor_phone, time FROM available_slot WHERE dept_id = ? ORDER BY time";
         this.dept = dept;
     }
 
     @Override
     protected void prepareStatement() throws SQLException {
+        statement = conn.prepareStatement(sqlQuery);
         statement.setInt(1, dept);
     }
 }

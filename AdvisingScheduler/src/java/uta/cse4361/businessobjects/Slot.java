@@ -5,6 +5,8 @@
  */
 package uta.cse4361.businessobjects;
 
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Michael
@@ -17,6 +19,34 @@ public class Slot {
     private int departmentId;
     private String departmentName;
     private long time;
+
+    public int getId() {
+        return id;
+    }
+
+    public int getAdvisorId() {
+        return advisorId;
+    }
+
+    public String getAdvisorName() {
+        return advisorName;
+    }
+
+    public String getAdvisorPhone() {
+        return advisorPhone;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public long getTime() {
+        return time;
+    }
 
     public Slot(int id, int advisorId, String advisorName, String advisorPhone, int departmentId, String departmentName, long time) {
         this.id = id;
@@ -36,5 +66,10 @@ public class Slot {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.time = timestamp.getTime();
+    }
+
+    public String getTimeStamp() {
+        SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
+        return df.format(time);
     }
 }

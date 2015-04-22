@@ -7,35 +7,73 @@ package uta.cse4361.businessobjects;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.GregorianCalendar;
 
 /**
  *
  * @author Michael
  */
-public class SlotMonth extends Month {
+public class SlotMonth {
+    private int year;
+    private int month;
+    private long time;
+    private int days;
+    private Slot[] slots;
+    private Slot[][] dateSlots;
 
-    private int[] slotDays;
-
-    public SlotMonth(int year, int month, ArrayList<java.sql.Timestamp> timeslots) {
-        super(year, month);
-        Calendar cal = Calendar.getInstance();
-        SortedSet<Integer> days = new TreeSet();
-        for(int i = 0; i < timeslots.size(); i++) {
-            cal.setTimeInMillis(timeslots.get(i).getTime());
-            if(cal.get(Calendar.YEAR) == this.getYear() && cal.get(Calendar.MONTH) == this.getMonth()) {
-                days.add(cal.get(Calendar.DAY_OF_MONTH));
-            }
-        }
-        slotDays = new int[days.size()];
-        int i = 0;
-        for(int day : days) {
-            slotDays[i++] = day;
-        }
+    public int getYear() {
+        return year;
     }
 
-    public int[] getSlotDays() {
-        return slotDays;
+    public int getMonth() {
+        return month;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public Slot[] getSlots() {
+        return slots;
+    }
+
+    public SlotMonth(int year, int month, Slot[] slots, Slot[][] dateSlots) {
+        this.year = year;
+        this.month = month;
+        this.slots = slots;
+        Calendar cal = new GregorianCalendar(year, month, 1);
+        this.time = cal.getTimeInMillis();
+        this.days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        this.dateSlots = dateSlots;
+    }
+
+    public int getCalendarDate(int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DATE, 1);
+        cal.set(Calendar.DATE, 1 - cal.get(Calendar.DAY_OF_WEEK) + 1 + i);
+        return cal.get(Calendar.DATE);
+    }
+
+    public boolean getCalendarDateInMonth(int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DATE, 1);
+        int cMonth = cal.get(Calendar.MONTH);
+        cal.set(Calendar.DATE, 1 - cal.get(Calendar.DAY_OF_WEEK) + 1 + i);
+        return cal.get(Calendar.MONTH) == cMonth;
+    }
+
+    public Slot[] getSlotsOnDate(int date) {
+        if(date - 1 > days || date - 1 < 0) {
+            return new Slot[0];
+        }
+        return this.dateSlots[date - 1];
     }
 }
