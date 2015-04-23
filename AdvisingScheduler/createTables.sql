@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS advising;
-CREATE SCHEMA advising;
-USE advising;
+DROP DATABASE IF EXISTS advisingteam3;
+CREATE SCHEMA advisingteam3;
+USE advisingteam3;
 
 CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT,

@@ -14,11 +14,11 @@ import java.sql.*;
 public abstract class RDBImplCommand {
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/advising";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/advisingteam3";
 
     //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "er1ja@18xs@3";
+    static final String USER = "team3";
+    static final String PASS = "er1ja@18xs@33";
 
     protected String sqlQuery;
     protected Connection conn;

@@ -18,15 +18,15 @@
     <script>
         setTimeout(function() {
             window.location.href = '<%= url %>';
-        }, 3000);
+        }, 5000);
     </script>
   </head>
   <body>
-      <div id="alert">
-          <div>
-              <p><jsp:doBody/></p>
-              <p>You will be redirected in 3 seconds, or <a href="<%= url %>">click here</a> if you do not wish to wait.</p></div>
-          </div>
-      </div>
+     <div id="alert">
+        <div>
+          <p><jsp:doBody/></p>
+          <p>You will be redirected in 5 seconds, or <a href="<%= url %>">click here</a> if you do not wish to wait.</p>
+        </div>
+     </div>
   </body>
 </html>

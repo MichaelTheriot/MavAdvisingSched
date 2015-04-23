@@ -36,20 +36,7 @@
     <c:otherwise>
         <t:layout pagetitle="Sign in">
             <jsp:attribute name="loggedout">
-                <form class="panel" action="${pageContext.request.contextPath}/login" method="POST">
-                    <fieldset>
-                        <legend>Access your account</legend>
-                        <ol>
-                            <li>
-                                <t:forminput name="email" label="Email" type="email" placeholder="email@mavs.uta.edu" pattern=".*@mavs\.uta\.edu" title="Enter your UTA email" required="true" />
-                            </li>
-                            <li>
-                                <t:forminput name="password" label="Password" type="password" placeholder="************" required="true" />
-                            </li>
-                        </ol>
-                        <input type="submit" value="Sign in">
-                    </fieldset>
-                </form>
+                <t:login />
             </jsp:attribute>
         </t:layout>
     </c:otherwise>
