@@ -16,6 +16,15 @@ import java.util.GregorianCalendar;
 public class SlotCalendar {
     public SlotCalendar() {}
 
+    public SlotMonth getRelativeMonthBySlot(Slot[] slots, int month) {
+        Calendar cal = Calendar.getInstance();
+        if(slots.length > 0) {
+            cal.setTimeInMillis(slots[0].getTime());
+        }
+        cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + month);
+        return getMonth(slots, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
+    }
+
     public SlotMonth getRelativeMonth(Slot[] slots, int month) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + month);

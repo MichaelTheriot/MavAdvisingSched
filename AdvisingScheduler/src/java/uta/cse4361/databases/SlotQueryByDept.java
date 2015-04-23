@@ -16,7 +16,7 @@ public class SlotQueryByDept extends SlotQuery {
     private int dept;
 
     public SlotQueryByDept(int dept) {
-        this.sqlQuery = "SELECT DISTINCT id, dept_id, dept_name, advisor_id, advisor_name, advisor_phone, time FROM available_slot WHERE dept_id = ? ORDER BY time";
+        this.sqlQuery = "SELECT DISTINCT id, dept_id, dept_name, advisor_id, advisor_name, advisor_email, advisor_phone, advisor_rank, time, available FROM future_slot WHERE dept_id = ? ORDER BY time";
         this.dept = dept;
     }
 

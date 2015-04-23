@@ -8,7 +8,7 @@
 <jsp:useBean id="SlotCal" class="uta.cse4361.businessobjects.SlotCalendar"/>
 <jsp:useBean id="date" class="java.util.Date"/>
 <c:set var="page" value="${(not empty page) ? (page < 0 ? 0 : page) : 0}" />
-<c:set var="slotMonth" value="${SlotCal.getRelativeMonth(slots, page)}" />
+<c:set var="slotMonth" value="${SlotCal.getRelativeMonthBySlot(slots, page)}" />
 ${date.setTime(slotMonth.getTime())}
     <table class="calendar">
         <caption><c:if test="${page > 0}"><button class="previousbutton" name="page" value="${page - 1}" type="submit">Previous</button></c:if><fmt:formatDate value="${date}" pattern="MMMM yyyy" /><button class="nextbutton" name="page" value="${page + 1}" type="submit">Next</button></caption>
@@ -47,7 +47,14 @@ ${date.setTime(slotMonth.getTime())}
                                     <td>
                                         <c:if test="${fn:length(dateSlots) > 0}">
                                             <c:forEach var="k" begin="0" end="${fn:length(dateSlots) - 1}">
-                                                <t:radioblock label="<span class=\"heading\">${dateSlots[k].getTimeStamp()}</span> <span class=\"chk\">${dateSlots[k].getAdvisorName()}</span>" name="slot" uid="${dateSlots[k].getId()}" value="${dateSlots[k].getId()}" />
+                                                <c:choose>
+                                                    <c:when test="${dateSlots[k].getAvailable() == true}">
+                                                        <t:radioblock label="<span class=\"heading\">${dateSlots[k].getTimeStamp()}</span> <span class=\"chk\">${dateSlots[k].getAdvisorName()}</span>" name="slot" uid="${dateSlots[k].getId()}" value="${dateSlots[k].getId()}" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <t:radioblock label="<span class=\"heading\">${dateSlots[k].getTimeStamp()}</span> <span class=\"chk\">${dateSlots[k].getAdvisorName()}</span>" name="slot" uid="${dateSlots[k].getId()}" value="${dateSlots[k].getId()}" disabled="true" />
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:forEach>
                                         </c:if>
                                     </td>

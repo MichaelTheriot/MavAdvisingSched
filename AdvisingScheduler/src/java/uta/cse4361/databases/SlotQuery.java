@@ -11,7 +11,7 @@ import uta.cse4361.businessobjects.Slot;
 public class SlotQuery extends RDBImplCommand {
 
     public SlotQuery() {
-        this.sqlQuery = "SELECT DISTINCT id, dept_id, dept_name, advisor_id, advisor_name, advisor_phone, time FROM available_slot ORDER BY time";
+        this.sqlQuery = "SELECT DISTINCT id, dept_id, dept_name, advisor_id, advisor_name, advisor_email, advisor_phone, advisor_rank, time, available FROM future_slot ORDER BY time";
     }
 
     @Override
@@ -23,7 +23,17 @@ public class SlotQuery extends RDBImplCommand {
     public void processResult() throws SQLException {
         ArrayList<Slot> slots = new ArrayList();
         while(resultSet.next()) {
-            Slot slot = new Slot(resultSet.getInt("id"), resultSet.getInt("advisor_id"), resultSet.getString("advisor_name"), resultSet.getString("advisor_phone"), resultSet.getInt("dept_id"), resultSet.getString("dept_name"), resultSet.getTimestamp("time").getTime());
+            int id = resultSet.getInt("id");
+            int departmentId = resultSet.getInt("dept_id");
+            String departmentName = resultSet.getString("dept_name");
+            int advisorId = resultSet.getInt("advisor_id");
+            String advisorName = resultSet.getString("advisor_name");
+            String advisorEmail = resultSet.getString("advisor_email");
+            String advisorPhone = resultSet.getString("advisor_phone");
+            int advisorRank = resultSet.getInt("advisor_rank");
+            long time = resultSet.getTimestamp("time").getTime();
+            boolean available = resultSet.getBoolean("available");
+            Slot slot = new Slot(id, departmentId, departmentName, advisorId, advisorName, advisorEmail, advisorPhone, advisorRank, time, available);
             slots.add(slot);
         }
         if(!slots.isEmpty()) {

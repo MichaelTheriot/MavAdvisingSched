@@ -125,6 +125,5 @@ fieldset.radioblocks :checked  + label {
   left: 0;
 }
 .calendar .nextbutton:hover, .calendar .previousbutton:hover {
-  
   text-decoration: underline;
 }
