@@ -52,4 +52,13 @@
         <url-pattern>/schedule</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>appointments</servlet-name>
+        <jsp-file>/WEB-INF/app/appointments.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>appointments</servlet-name>
+        <url-pattern>/appointments</url-pattern>
+    </servlet-mapping>
+
 </web-app>

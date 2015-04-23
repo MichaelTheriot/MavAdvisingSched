@@ -116,7 +116,7 @@ form textarea {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
-form input[disabled], form select[disabled] {
+form input[disabled], form select[disabled], form textarea[disabled] {
   background-color: #ccc;
 }
 form input[type="submit"] {
@@ -214,4 +214,18 @@ form.wide {
   float: none;
   margin: auto;
   background: none;
+}
+table.module {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 1px;
+  border-collapse: separate;
+  font-family: sans-serif;
+  font-size: 12px;
+  background: rgb(31, 61, 99);
+}
+table.module th {
+  background-color: #3566a7;
+  padding: 8px 0;
+  color: #fff;
 }

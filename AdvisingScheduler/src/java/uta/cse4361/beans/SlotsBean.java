@@ -8,6 +8,7 @@ package uta.cse4361.beans;
 import uta.cse4361.businessobjects.Slot;
 import uta.cse4361.databases.SlotQuery;
 import uta.cse4361.databases.SlotQueryByDept;
+import uta.cse4361.databases.SlotQueryById;
 
 /**
  *
@@ -28,5 +29,11 @@ public class SlotsBean {
         SlotQuery query = new SlotQueryByDept(dept);
         query.execute();
         return (Slot[]) query.getResult();
+    }
+
+    public Slot getSlotById(int id) {
+        SlotQuery query = new SlotQueryById(id);
+        query.execute();
+        return (Slot) query.getResult();
     }
 }

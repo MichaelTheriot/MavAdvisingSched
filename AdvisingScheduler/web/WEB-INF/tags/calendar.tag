@@ -49,10 +49,10 @@ ${date.setTime(slotMonth.getTime())}
                                             <c:forEach var="k" begin="0" end="${fn:length(dateSlots) - 1}">
                                                 <c:choose>
                                                     <c:when test="${dateSlots[k].getAvailable() == true}">
-                                                        <t:radioblock label="<span class=\"heading\">${dateSlots[k].getTimeStamp()}</span> <span class=\"chk\">${dateSlots[k].getAdvisorName()}</span>" name="slot" uid="${dateSlots[k].getId()}" value="${dateSlots[k].getId()}" />
+                                                        <t:radioblock label="<span class=\"heading\">${dateSlots[k].getTimestamp('hh:mm a')}</span> <span class=\"chk\">${dateSlots[k].getAdvisorName()}</span>" name="slot" uid="${dateSlots[k].getId()}" value="${dateSlots[k].getId()}" />
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <t:radioblock label="<span class=\"heading\">${dateSlots[k].getTimeStamp()}</span> <span class=\"chk\">${dateSlots[k].getAdvisorName()}</span>" name="slot" uid="${dateSlots[k].getId()}" value="${dateSlots[k].getId()}" disabled="true" />
+                                                        <t:radioblock label="<span class=\"heading\">${dateSlots[k].getTimestamp('hh:mm a')}</span> <span class=\"chk\">${dateSlots[k].getAdvisorName()}</span>" name="slot" uid="${dateSlots[k].getId()}" value="${dateSlots[k].getId()}" disabled="true" />
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:forEach>

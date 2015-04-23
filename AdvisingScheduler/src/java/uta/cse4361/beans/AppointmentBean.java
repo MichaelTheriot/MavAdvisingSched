@@ -5,21 +5,23 @@
  */
 package uta.cse4361.beans;
 
+import uta.cse4361.businessobjects.Appointment;
 import uta.cse4361.businessobjects.Department;
+import uta.cse4361.databases.AppointmentQuery;
 import uta.cse4361.databases.DepartmentQuery;
 
 /**
  *
  * @author Michael
  */
-public class DepartmentBean {
+public class AppointmentBean {
 
-    public DepartmentBean() {
+    public AppointmentBean() {
     }
 
-    public Department[] getDepartments() {
-        DepartmentQuery query = new DepartmentQuery();
+    public Appointment[] getAppointmentsByStudentId(int studentId) {
+        AppointmentQuery query = new AppointmentQuery(studentId);
         query.execute();
-        return (Department[]) query.getResult();
+        return (Appointment[]) query.getResult();
     }
 }

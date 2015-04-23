@@ -89,8 +89,8 @@ public class Slot {
         this.available = available;
     }
 
-    public String getTimeStamp() {
-        SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
+    public String getTimestamp(String fmt) {
+        SimpleDateFormat df = new SimpleDateFormat(fmt);
         return df.format(time);
     }
 }

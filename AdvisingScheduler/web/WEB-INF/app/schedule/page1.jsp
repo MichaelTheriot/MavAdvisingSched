@@ -1,7 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@page import="uta.cse4361.businessobjects.Department"%>
-<jsp:useBean id="department" class="uta.cse4361.beans.DepartmentBean"/>
 <c:set var="depts" value="${department.getDepartments()}" />
 <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
     <fieldset>
@@ -34,3 +33,6 @@
 </form>
 <h1>Schedule an Appointment</h1>
 <p>Please use the form to the right to schedule an appointment.</p>
+<c:if test="${empty sessionScope.studentid}">
+    <p>You are not signed in; you will be asked to provide your email and phone number. Create a student account to remember these details and view scheduled appointments.</p>
+</c:if>

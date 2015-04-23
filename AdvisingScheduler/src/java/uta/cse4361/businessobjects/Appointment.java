@@ -9,44 +9,60 @@ package uta.cse4361.businessobjects;
  *
  * @author Michael
  */
-public class Appointment extends Slot {
+public class Appointment {
+    private int apptId;
+    private int advisorId;
+    private String advisor;
+    private String advisorPhone;
+    private String advisorEmail;
+    private int advisorRank;
     private int studentId;
-    private String studentName;
+    private String student;
     private String utaStudentId;
+    private String studentEmail;
     private String studentPhone;
     private String reason;
     private String description;
+    private long time;
 
-    public Appointment(int id, int advisorId, String advisorName, String advisorPhone, int departmentId, String departmentName, java.sql.Timestamp timestamp, int studentId, String studentName, String utaStudentId, String studentPhone, String reason, String description) {
-        super(id, advisorId, advisorName, advisorPhone, departmentId, departmentName, timestamp.getTime());
-        this.studentId = studentId;
-        this.studentName = studentName;
-        this.utaStudentId = utaStudentId;
-        this.studentPhone = studentPhone;
-        this.reason = reason;
-        this.description = description;
+    public int getApptId() {
+        return apptId;
     }
 
-    public Appointment(int id, int advisorId, String advisorName, String advisorPhone, int departmentId, String departmentName, long time, int studentId, String studentName, String utaStudentId, String studentPhone, String reason, String description) {
-        super(id, advisorId, advisorName, advisorPhone, departmentId, departmentName, time);
-        this.studentId = studentId;
-        this.studentName = studentName;
-        this.utaStudentId = utaStudentId;
-        this.studentPhone = studentPhone;
-        this.reason = reason;
-        this.description = description;
+    public int getAdvisorId() {
+        return advisorId;
+    }
+
+    public String getAdvisor() {
+        return advisor;
+    }
+
+    public String getAdvisorPhone() {
+        return advisorPhone;
+    }
+
+    public String getAdvisorEmail() {
+        return advisorEmail;
+    }
+
+    public int getAdvisorRank() {
+        return advisorRank;
     }
 
     public int getStudentId() {
         return studentId;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public String getStudent() {
+        return student;
     }
 
     public String getUtaStudentId() {
         return utaStudentId;
+    }
+
+    public String getStudentEmail() {
+        return studentEmail;
     }
 
     public String getStudentPhone() {
@@ -60,4 +76,26 @@ public class Appointment extends Slot {
     public String getDescription() {
         return description;
     }
+
+    public long getTime() {
+        return time;
+    }
+
+    public Appointment(int apptId, int advisorId, String advisor, String advisorPhone, String advisorEmail, int advisorRank, int studentId, String student, String utaStudentId, String studentEmail, String studentPhone, String reason, String description, long time) {
+        this.apptId = apptId;
+        this.advisorId = advisorId;
+        this.advisor = advisor;
+        this.advisorPhone = advisorPhone;
+        this.advisorEmail = advisorEmail;
+        this.advisorRank = advisorRank;
+        this.studentId = studentId;
+        this.student = student;
+        this.utaStudentId = utaStudentId;
+        this.studentEmail = studentEmail;
+        this.studentPhone = studentPhone;
+        this.reason = reason;
+        this.description = description;
+        this.time = time;
+    }
+
 }

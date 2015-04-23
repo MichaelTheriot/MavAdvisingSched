@@ -1,8 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<jsp:useBean id="slotsbean" class="uta.cse4361.beans.SlotsBean"/>
 <c:catch var="e"><fmt:parseNumber var="dept" type="number" integerOnly="true" value="${param.dept}" /></c:catch><c:if test="${e != null}"><c:set var="dept" value="0" /></c:if>
 <c:catch var="e"><fmt:parseNumber var="page" type="number" integerOnly="true" value="${param.page}" /></c:catch><c:if test="${e != null}"><c:set var="page" value="0" /></c:if>
 <c:set var="slots" value="${slotsbean.getSlotsByDept(dept)}" />
@@ -15,14 +12,13 @@
             <fieldset class="radioblocks">
                 <legend>Choose a slot</legend>
                 <t:calendar slots="${slots}" page="${page}" />
+                <input type="submit" value="Schedule slot" />
             </fieldset>
         </form>
-        <h1>Schedule an Appointment</h1>
-        <p>Please use the form to the right to schedule an appointment.</p>
     </c:when>
     <c:otherwise>
         <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
-            <input type="hidden" name="major" value="${param.major}" />
+            <input type="hidden" name="major" value="${major}" />
             <fieldset>
                 <fieldset>
                     <legend>No slots available</legend>
