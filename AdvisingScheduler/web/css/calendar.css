@@ -87,6 +87,7 @@ fieldset.radioblocks .calendar label:hover {
 fieldset.radioblocks .calendar [disabled] + label {
   background-color: hsl(214, 0%, 60%);
   color: #fff;
+  cursor: not-allowed;
 }
 .calendar .heading {
   display: block;
@@ -114,9 +115,10 @@ fieldset.radioblocks :checked  + label {
   border: none;
   background: none;
   top: 0;
-  height: 100%;
   font-size: 0.9em;
-  padding: 0 16px;
+  line-height: 1em;
+  padding: 0 !important;
+  margin: 18px 16px 0;
 }
 .calendar .nextbutton {
   right: 0;

@@ -43,7 +43,8 @@ CREATE TABLE appointment (
   reason VARCHAR(30) NOT NULL,
   description VARCHAR(100),
   PRIMARY KEY (slotid),
-  FOREIGN KEY (slotid) REFERENCES slot(id) ON DELETE CASCADE
+  FOREIGN KEY (slotid) REFERENCES slot(id) ON DELETE CASCADE,
+  FOREIGN KEY (studentid) REFERENCES student_user(studentid) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE appointment_unregistered (
@@ -81,6 +82,7 @@ AS
          auser.phone                           AS advisor_phone, 
          auser.email                           AS advisor_email, 
          auser.rank                            AS advisor_rank, 
+         advisor.departmentid                  AS advisor_dept, 
          stud_user.studentid                   AS student_id, 
          Concat(suser.fname, ' ', suser.lname) AS student, 
          stud_user.utastudentid                AS uta_student_id, 
@@ -110,6 +112,7 @@ AS
          auser.phone                           AS advisor_phone, 
          auser.email                           AS advisor_email, 
          auser.rank                            AS advisor_rank, 
+         advisor.departmentid                  AS advisor_dept, 
          Concat(appt.fname, ' ', appt.lname)   AS student, 
          appt.email                            AS student_email, 
          appt.phone                            AS student_phone, 
@@ -134,6 +137,7 @@ CREATE VIEW any_appointment AS
         advisor_phone, 
         advisor_email, 
         advisor_rank, 
+        advisor_dept, 
         student_id, 
         student, 
         uta_student_id, 
@@ -151,6 +155,7 @@ CREATE VIEW any_appointment AS
         advisor_phone, 
         advisor_email, 
         advisor_rank, 
+        advisor_dept, 
         NULL,
         student, 
         NULL, 

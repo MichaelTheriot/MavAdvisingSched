@@ -7,8 +7,9 @@
 <%@attribute name="value" %>
 <%@attribute name="disabled" type="java.lang.Boolean" %>
 <c:set var="attr" value="" />
-<c:if test="${(not empty title)}"><c:set var="attr" value="${attr} title=\"${title}\"" /></c:if>
 <c:if test="${(not empty value)}"><c:set var="attr" value="${attr} value=\"${value}\"" /></c:if>
 <c:if test="${(not empty disabled)}"><c:set var="attr" value="${attr} disabled" /></c:if>
+<c:set var="attr2" value="" />
+<c:if test="${(not empty title)}"><c:set var="attr2" value="${attr2} title=\"${title}\"" /></c:if>
 <input type="radio" name="${name}" id="s_${uid}"${attr} />
-<label for="s_${uid}">${label}</label>
+<label for="s_${uid}"${attr2}>${label}</label>

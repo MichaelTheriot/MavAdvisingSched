@@ -30,6 +30,7 @@ public class ScheduleAppointmentQuery extends RDBImplCommand {
 
     @Override
     public void prepareStatement() throws SQLException {
+        statement = conn.prepareStatement(sqlQuery);
         statement.setInt(1, slotId);
         statement.setInt(2, studentId);
         statement.setString(3, reason);

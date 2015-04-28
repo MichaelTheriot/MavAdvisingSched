@@ -10,23 +10,14 @@ import uta.cse4361.businessobjects.Appointment;
  */
 public class AppointmentQuery extends RDBImplCommand {
 
-    private int studentId;
-
-    public AppointmentQuery(int studentId) {
-            this.sqlQuery = "SELECT DISTINCT * FROM student_appointment WHERE student_id = ? AND time > now() ORDER BY time";
-        this.studentId = studentId;
+    public AppointmentQuery() {
+        this.sqlQuery = "SELECT DISTINCT * FROM student_appointment WHERE time > now() ORDER BY time";
     }
     
     @Override
     public void queryDB() throws SQLException {
         resultSet = statement.executeQuery();
         processResult();
-    }
-
-    @Override
-    public void prepareStatement() throws SQLException {
-        statement = conn.prepareStatement(sqlQuery);
-        statement.setInt(1, studentId);
     }
 
     public void processResult() throws SQLException {
@@ -47,7 +38,7 @@ public class AppointmentQuery extends RDBImplCommand {
                             resultSet.getString("student_phone"),
                             resultSet.getString("reason"),
                             resultSet.getString("description"),
-                            resultSet.getLong("time")
+                            resultSet.getTimestamp("time").getTime()
                     )
             );
         }

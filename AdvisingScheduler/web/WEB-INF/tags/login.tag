@@ -8,7 +8,7 @@
                 <t:forminput name="email" label="Email" type="email" placeholder="email@mavs.uta.edu" title="Enter your UTA email" required="true" />
             </li>
             <li>
-                <t:forminput name="password" label="Password" type="password" placeholder="************" required="true" />
+                <t:forminput name="password" label="Password" type="password" placeholder="Enter your password..." required="true" />
             </li>
         </ol>
         <input type="submit" value="Sign in">

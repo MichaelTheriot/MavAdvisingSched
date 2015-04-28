@@ -1,9 +1,13 @@
+// extend slot...
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package uta.cse4361.businessobjects;
+
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -98,4 +102,8 @@ public class Appointment {
         this.time = time;
     }
 
+    public String getTimestamp(String fmt) {
+        SimpleDateFormat df = new SimpleDateFormat(fmt);
+        return df.format(time);
+    }
 }

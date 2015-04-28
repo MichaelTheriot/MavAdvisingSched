@@ -5,7 +5,7 @@
 <c:set var="major" value="${(not empty sessionScope.major) ? sessionScope.major : param.major}" />
 <c:choose>
     <c:when test="${not empty sessionScope.studentid}">
-        <c:set var="appt" value="${schedulebean.scheduleAppointment(param.slot, sessionScope.studentId, param.reason, param.desc)}" />
+        <c:set var="appt" value="${schedulebean.scheduleAppointment(param.slot, sessionScope.studentid, param.reason, param.desc)}" />
     </c:when>
     <c:otherwise>
         <c:set var="appt" value="${schedulebean.scheduleAppointment(param.slot, param.email, param.fname, param.lname, param.phone, param.reason, param.desc)}" />
