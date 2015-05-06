@@ -30,7 +30,7 @@
                         <jsp:setProperty name="advisorbean" property="userId" value='${user.getId()}' />
                         <c:set var="advisor" value="${advisorbean.getAdvisor()}" />
                         <c:set var="advisorid" value="${advisor.getAdvisorId()}" scope="session" />
-                        <c:set var="dept" value="${student.getAdvisorDept()}" scope="session" />
+                        <c:set var="dept" value="${advisor.getDept()}" scope="session" />
                     </c:if>
                     You have signed in successfully!
                 </c:when>

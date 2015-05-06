@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/calendar.css" />
+    <link rel="shortcut icon" href="https://www.uta.edu/favicon.ico" type="image/x-icon">
   </head>
   <body>
     <t:header pagetitle="UTA Advisor Scheduling" rank="${rank}" />

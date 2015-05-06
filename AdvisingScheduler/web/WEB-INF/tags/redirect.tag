@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <link rel="stylesheet" type="text/css" href="css/calendar.css" />
+    <link rel="shortcut icon" href="https://www.uta.edu/favicon.ico" type="image/x-icon">
     <script>
         setTimeout(function() {
             window.location.href = '<%= url %>';

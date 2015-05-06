@@ -4,7 +4,7 @@
 <c:set var="major" value="${(not empty sessionScope.major) ? sessionScope.major : param.major}" />
 <c:set var="slot" value="${slotsbean.getSlotById(id)}" />
 <c:choose>
-    <c:when test="${slot == null}">
+    <c:when test="${slot == null or slot.getAvailable() == false}">
         <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
             <input type="hidden" name="dept" value="${param.dept}" />
             <input type="hidden" name="major" value="${major}" />
@@ -25,25 +25,47 @@
             <input type="hidden" name="slot" value="${id}" />
             <input type="hidden" name="reason" value="${param.reason}" />
             <input type="hidden" name="desc" value="${param.desc}" />
+            <c:if test="${empty sessionScope.studentid}">
+                <input type="hidden" name="fname" value="${param.fname}" />
+                <input type="hidden" name="lname" value="${param.lname}" />
+                <input type="hidden" name="email" value="${param.email}" />
+                <input type="hidden" name="phone" value="${param.phone}" />
+            </c:if>
             <input type="hidden" name="confirm" value="true" />
             <fieldset>
                 <fieldset>
                     <legend>Review appointment</legend>
                     <ol>
-                        <c:if test="${empty sessionScope.studentid}">
-                            <li>
-                                <t:forminput name="fname" label="First name" type="text" value="${param.fname}" required="true" disabled="true" />
-                            </li>
-                            <li>
-                                <t:forminput name="lname" label="Last name" type="text" value="${param.lname}" required="true" disabled="true" />
-                            </li>
-                            <li>
-                                <t:forminput name="email" label="Email" type="email" value="${param.email}" required="true" disabled="true" />
-                            </li>
-                            <li>
-                                <t:forminput name="phone" label="Phone number" type="text" value="${param.phone}" required="true" disabled="true" />
-                            </li>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.studentid}">
+                                <li>
+                                    <t:forminput name="fname" label="First name" type="text" value="${sessionScope.fname}" required="true" disabled="true" />
+                                </li>
+                                <li>
+                                    <t:forminput name="lname" label="Last name" type="text" value="${sessionScope.lname}" required="true" disabled="true" />
+                                </li>
+                                <li>
+                                    <t:forminput name="email" label="Email" type="email" value="${sessionScope.email}" required="true" disabled="true" />
+                                </li>
+                                <li>
+                                    <t:forminput name="phone" label="Phone number" type="text" value="${sessionScope.phone}" required="true" disabled="true" />
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li>
+                                    <t:forminput name="fname" label="First name" type="text" value="${param.fname}" required="true" disabled="true" />
+                                </li>
+                                <li>
+                                    <t:forminput name="lname" label="Last name" type="text" value="${param.lname}" required="true" disabled="true" />
+                                </li>
+                                <li>
+                                    <t:forminput name="email" label="Email" type="email" value="${param.email}" required="true" disabled="true" />
+                                </li>
+                                <li>
+                                    <t:forminput name="phone" label="Phone number" type="text" value="${param.phone}" required="true" disabled="true" />
+                                </li>
+                            </c:otherwise>
+                    </c:choose>
                         <li>
                             <t:forminput name="advisor" label="Advisor" type="text" value="${slot.getAdvisorName()}" disabled="true" />
                         </li>

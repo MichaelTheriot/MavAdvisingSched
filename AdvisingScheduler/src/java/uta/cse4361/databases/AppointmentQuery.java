@@ -11,7 +11,7 @@ import uta.cse4361.businessobjects.Appointment;
 public class AppointmentQuery extends RDBImplCommand {
 
     public AppointmentQuery() {
-        this.sqlQuery = "SELECT DISTINCT * FROM student_appointment WHERE time > now() ORDER BY time";
+        this.sqlQuery = "SELECT DISTINCT * FROM any_appointment WHERE time > now() ORDER BY time";
     }
     
     @Override

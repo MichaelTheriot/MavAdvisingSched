@@ -8,8 +8,18 @@
       <nav>
         <ul>
 <t:navlink url="${pageContext.request.contextPath}/" name="Home" />
+<c:if test="${rank >= 3}">
+    <t:navlink url="${pageContext.request.contextPath}/create" name="Create Advisor" />
+    <t:navlink url="${pageContext.request.contextPath}/dept" name="Edit Departments" />
+</c:if>
 <c:if test="${rank <= 0}">
-    <t:navlink url="${pageContext.request.contextPath}/schedule" name="Schedule Appointment" />
+    <t:navlink url="${pageContext.request.contextPath}/schedule" name="Create Appointment" />
+</c:if>
+<c:if test="${rank == 2}">
+    <t:navlink url="${pageContext.request.contextPath}/partition" name="Assign Students to Advisors" />
+</c:if>
+<c:if test="${rank == 1 || rank == 2}">
+    <t:navlink url="${pageContext.request.contextPath}/slots" name="Edit Availability" />
 </c:if>
 <c:if test="${rank < 0}">
     <t:navlink url="${pageContext.request.contextPath}/login" name="Sign in" />
@@ -17,6 +27,7 @@
 </c:if>
 <c:if test="${rank >= 0}">
     <t:navlink url="${pageContext.request.contextPath}/appointments" name="View Appointments" />
+    <t:navlink url="${pageContext.request.contextPath}/account" name="Account" />
     <t:navlink url="${pageContext.request.contextPath}/logout" name="Sign Out" />
 </c:if>
         </ul>

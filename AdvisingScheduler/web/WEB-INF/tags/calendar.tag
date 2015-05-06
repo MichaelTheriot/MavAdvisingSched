@@ -11,7 +11,7 @@
 <c:set var="slotMonth" value="${SlotCal.getRelativeMonthBySlot(slots, page)}" />
 ${date.setTime(slotMonth.getTime())}
     <table class="calendar">
-        <caption><c:if test="${page > 0}"><button class="previousbutton" name="page" value="${page - 1}" type="submit">Previous</button></c:if><fmt:formatDate value="${date}" pattern="MMMM yyyy" /><button class="nextbutton" name="page" value="${page + 1}" type="submit">Next</button></caption>
+        <caption><c:if test="${page > 0}"><button class="previousbutton" name="page" value="${page - 1}" type="submit">Previous month</button></c:if><fmt:formatDate value="${date}" pattern="MMMM yyyy" /><button class="nextbutton" name="page" value="${page + 1}" type="submit">Next month</button></caption>
         <tbody>
             <tr>
                 <th>Sunday</th>
