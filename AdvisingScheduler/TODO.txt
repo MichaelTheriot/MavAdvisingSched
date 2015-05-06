@@ -1,0 +1,189 @@
+This project was built on Team 2's project from CSE 4361 Fall 2014.
+
+Michael Theriot was the only person in this group working on the code.
+
+As such, there are many features that I was not able to implement before the
+project was due.
+
+List of things to do:
+1. Outlook Integration
+
+The application should integrate with the Outlook API. The current login system
+should be replaced with OAuth 2.0; a user should be able to sign into their
+account by redirecting them to Outlook, granting this application access to
+specific details, then receiving a confirmation handshake from Outlook's server.
+
+Doing so eliminates the need for user registration, which this application
+currently lacks.
+
+If you do this, you will need to store the email of every advisor and admin in
+tables and check these on each login. If the email does not exist in these
+tables it should be assumed the user is a student.
+
+Relevant files:
+login.jsp
+login.tag
+LoginBean.java
+
+2. Create Slot Page
+
+This sounds obvious but due to time constraints I wasn't able to implement this.
+You need to create a new file that will query the database and a Bean to use it.
+
+INSERT INTO SLOT(advisorid, starttime) VALUES (<advisor's id>, <datetime>);
+
+Then add a .jsp file that uses the layout template and 'advisororleadadvisor'
+attribute fragment.
+
+3. Create Recurring Time Slots
+
+This is part of the previous requirement. Just make an input that allows the
+user to duplicate the slot(s) over several weeks. You can create a database
+procedure for this, schedule the slots 1 by 1, or create a long insert query.
+
+4. Admin Pages
+
+Currently the admin is only able to cancel any available appointment. The admin
+should be able to create advisors, departments, change advisor roles, etc.
+
+This is a pretty trivial thing to add. Departments are automatically numbered.
+You need to add a way to create/rename/delete departments. The database should
+not let you delete a department if advisors are assigned to them.
+
+If you implement the Outlook API and use tables to check if a user is an advisor
+then all you should have to do is insert an email and department id into a table
+in order to "create" an advisor.
+
+5. Database Integrity
+
+This is a very low priority. Student appointments are stored in 'appointments'
+and unregistered (prospect students) appointments are stored in
+'appointments_unregistered' at the moment, using the slot's ID as the primary
+key. Because of this, a student appointment and an unregistered student's
+appointment could potentially be on the same slot.
+
+The calendar only displays slots as available if they exist on available_slot,
+and if a user somehow attempted to schedule on a slot that has been taken on
+one of these tables I have modified the .jsp file to confirm the slot is
+actually available before querying the database. This means this case can never
+actually occur in this project, but on the database side it is still possible
+to insert conflicting rows.
+
+6. Footer Links
+
+I never finished the links on the footer of each page. Find something useful and
+add links to it down there in:
+footer.tag
+
+7. Calendar Pages
+
+I wrote the calendar from scratch because I didn't like the old JavaScript
+widget the project was using before.
+
+The first calendar I made automatically partitioned pages so each "page" was the
+next month a slot actually existed on. Some group members said this was
+confusing, so I modified the calendar's next "page" to be the next month
+instead. Right now there is no limit to next "pages" so you can travel forever
+into the future even if no slots exist. The application should at least indicate
+there are no more slots in the future if a user goes past the last one.
+
+8. Partitioning Students by Last Name
+
+One of our requirements was to partition students by last name. This is an easy
+feature to implement. Just create a table that stores the following:
+
+advisorid, startletter, endletter
+
+Then when a student tries to schedule an appointment, make a query that filters
+available_slot by department id AND checks if their last name fits within the
+bounds of the advisor's partition. If the advisor has no bounds then do not
+filter it out and allow students to schedule an appointment there.
+
+You should create some kind of constraint on the database that ensures this,
+probably using triggers.
+
+9. Remove User Table
+
+Right now we have a 'user', 'student_user', and 'advisor' table. A student has a
+rank of 0, an advisor has a rank of 1, a lead advisor has a rank of 2, and an
+admin has a rank of 3 or greater.
+
+This should be changed; after integrating Outlook, student_user and advisor 
+should store user information. Similarly, an admin table should be created.
+'user' should become a view instead, by UNIONing these tables and giving them
+ranks based on what table they were pulled from.
+
+10. Cleanup
+
+There are a lot of library files I added to this project to make it run. The old
+project used these files in test cases, but this semester we did not need to use
+test files. Some of the test files were not even on the same revision as the
+code in the source folder. We never used these, and after I recreated most of
+the source files they are no longer needed. The libraries for these can also go.
+
+There are some unused .jsp files and folders that can be deleted.
+
+11. Inheritance
+
+This is a low priority. Logically, appointment should inherit from slot.
+Currently it doesn't. The database needs to be updated so all appointment views
+contain the same information available on the slot views. Then the appointment
+objects needs to be modified so it inherits from slot.
+
+The same applies to student, advisor, lead advisor, and admin from user, once
+user is made into a view.
+
+12. Account Page
+
+There is no way to edit your account. This should be made possible. For new
+users there should be default data loaded on this page, such as undeclared
+major, unknown ph#, etc.
+
+13. Database Manager
+
+RDBImplCommand.java should be updated so the login is not stored in plaintext.
+
+Certain fields need to be encrypted as well, e.g. student id should be
+encrypted because of some OIT concern.
+
+===
+
+I removed all of the .jsp files from the previous project. These did not use
+templates and were just large copy/pastes of other jsp files with minor changes
+that eventually became inconsistent with each other. The project now uses
+templates and everything runs off of layout.tag. You can still find most of
+these in the /old/ folder. You should use this to see what features I missed
+and then eventually delete them. Files prefixed with a hyphen were files I had
+not yet converted to templates. Eventually I stopped converting these to
+templates and just wrote everything from scratch.
+
+I also implemented JSTL instead of embedded Java. You will notice these as
+<j: tags> in the .jsp files. Do not use embedded Java. If you find a file using
+<% tags %> convert them to JSTL.
+
+If you are adding a page you need to define it in web.xml in order for it to
+actually be accessible. This allows us to define pages that don't need a .jsp or
+.html extension. I designed the .jsp files in a way that reuses them instead of
+making duplicate files. Before this, there was a .jsp file for each step of
+the create appointment process. Now, only one .jsp file is used and it loads
+other files within itself. Use schedule.jsp and /schedule/ as a guide.
+
+Keep all .jsp files inside of /WEB-INF/. The old project had template files in
+the public folder so anyone could access them by editing the URL. Now only pages
+defined in web.xml are available.
+
+The original project's database was not functional and I decided to create an
+entirely new one. You can still refer to the old one:
+old_createAdvisingTables.sql
+dropAdvisingTables.sql
+
+The new database file is:
+createTables.sql
+
+These tables are normalized so NULL values don't exist (except for ph#). To get
+meaningful data use the views that combine them.
+
+I replaced nearly every file in this project, and the remaining features should
+be easy to implement now that the database works and templates have been added.
+
+If you want to change the directory of the project edit context.xml.
