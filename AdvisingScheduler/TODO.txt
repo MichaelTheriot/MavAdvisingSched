@@ -146,6 +146,11 @@ RDBImplCommand.java should be updated so the login is not stored in plaintext.
 Certain fields need to be encrypted as well, e.g. student id should be
 encrypted because of some OIT concern.
 
+14. Session
+
+Currently all the session information is stored on a cookie. It should only
+store a key that references an object on the server with the information.
+
 ===
 
 I removed all of the .jsp files from the previous project. These did not use
@@ -185,5 +190,8 @@ meaningful data use the views that combine them.
 
 I replaced nearly every file in this project, and the remaining features should
 be easy to implement now that the database works and templates have been added.
+
+Design the pages so admins can also perform some functions without writing
+redundant code. Use appointments.jsp as a guide on how to do this.
 
 If you want to change the directory of the project edit context.xml.
