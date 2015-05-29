@@ -23,7 +23,6 @@
 </c:if>
 <c:if test="${rank < 0}">
     <t:navlink url="${pageContext.request.contextPath}/login" name="Sign in" />
-    <t:navlink url="${pageContext.request.contextPath}/register" name="Register" />
 </c:if>
 <c:if test="${rank >= 0}">
     <t:navlink url="${pageContext.request.contextPath}/appointments" name="View Appointments" />

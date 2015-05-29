@@ -245,3 +245,25 @@ form.cell {
 form.cell input {
   margin: 0;
 }
+.msloginbtn {
+  display: inline-block;
+  padding-left: 76px;
+  padding-right: 28px;
+  float: right;
+  line-height: 64px;
+  background: hsl(29, 100%, 56%);
+  color: #fff;
+  font-family: 'Segoe UI Light', Segoe, 'Segoe UI', SegoeUI-Light-final, Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 100;
+  text-align: center;
+  margin-left: 16px;
+  background-image: url(../img/msglyph.png);
+  background-size: 56px 56px;
+  background-repeat: no-repeat;
+  background-position: 4px 4px;
+}
+.msloginbtn:hover, .msgloginbtn:active, .msgloginbtn:focus {
+  background-color: #0072C6;
+  background-image: url(../img/msglyphblue.png);
+}
