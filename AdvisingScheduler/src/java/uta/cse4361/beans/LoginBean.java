@@ -21,7 +21,7 @@ import uta.cse4361.databases.LoginQuery;
 public class LoginBean {
     private String email;
     private String password;
-    private final AzureClient az = new AzureClient("859a762f-a5c7-4bca-9615-4f7fd2534857", "OClH5LuRoQMBk7LW921Fx4jNAGmbDJ/5Ru60Pt26JmY=", "http://bartsimpson.uta.edu:8084/AdvisingSchedulerTeam3/login", "http://bartsimpson.uta.edu:8084/AdvisingSchedulerTeam3/logout");
+    private final AzureClient az = new AzureClient("", "", "http://bartsimpson.uta.edu:8084/AdvisingSchedulerTeam3/login", "http://bartsimpson.uta.edu:8084/AdvisingSchedulerTeam3/logout");
 
     public LoginBean() {
     }
