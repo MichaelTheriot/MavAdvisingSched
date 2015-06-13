@@ -3,7 +3,7 @@
 <c:catch var="e"><fmt:parseNumber var="dept" type="number" integerOnly="true" value="${param.dept}" /></c:catch><c:if test="${e != null}"><c:set var="dept" value="0" /></c:if>
 <c:catch var="e"><fmt:parseNumber var="page" type="number" integerOnly="true" value="${param.page}" /></c:catch><c:if test="${e != null}"><c:set var="page" value="0" /></c:if>
 <c:set var="slots" value="${slotsbean.getSlotsByDept(dept)}" />
-<c:set var="major" value="${(not empty sessionScope.major) ? sessionScope.major : param.major}" />
+<c:set var="major" value="${(not empty sessionScope.student) ? sessionScope.student.getMajor() : param.major}" />
 <c:choose>
     <c:when test="${slots != null}">
         <form class="wide" action="${pageContext.request.contextPath}/schedule" method="POST">

@@ -11,11 +11,9 @@ CREATE TABLE department (
 CREATE TABLE user (
   id INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(85) NOT NULL,
-  password CHAR(64) NOT NULL,
   fname VARCHAR(35) CHARSET utf8 NOT NULL,
   lname VARCHAR(35) CHARSET utf8 NOT NULL,
   phone CHAR(10),
-  rank INT NOT NULL,
   PRIMARY KEY (id),
   UNIQUE (email)
 );
@@ -26,7 +24,8 @@ CREATE TABLE advisor (
   departmentid INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (userid) REFERENCES user(id) ON DELETE CASCADE,
-  FOREIGN KEY (departmentid) REFERENCES department(id)
+  FOREIGN KEY (departmentid) REFERENCES department(id),
+  lead INT NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE slot (
@@ -36,6 +35,16 @@ CREATE TABLE slot (
   PRIMARY KEY (id),
   FOREIGN KEY (advisorid) REFERENCES advisor(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE student_user (
+  studentid INT NOT NULL AUTO_INCREMENT,
+  userid INT NOT NULL,
+  utastudentid CHAR(10) NOT NULL,
+  major VARCHAR(30) NOT NULL,
+  PRIMARY KEY (studentid),
+  FOREIGN KEY (userid) REFERENCES user(id),
+  UNIQUE (userid)
+);
 
 CREATE TABLE appointment (
   slotid INT NOT NULL,
@@ -59,14 +68,10 @@ CREATE TABLE appointment_unregistered (
   FOREIGN KEY (slotid) REFERENCES slot(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE student_user (
-  studentid INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE admin (
   userid INT NOT NULL,
-  utastudentid CHAR(10) NOT NULL,
-  major VARCHAR(30) NOT NULL,
-  PRIMARY KEY (studentid),
   FOREIGN KEY (userid) REFERENCES user(id),
-  UNIQUE (userid)
+  PRIMARY KEY (userid)
 );
 
 ALTER TABLE slot
@@ -81,7 +86,7 @@ AS
          Concat(auser.fname, ' ', auser.lname) AS advisor, 
          auser.phone                           AS advisor_phone, 
          auser.email                           AS advisor_email, 
-         auser.rank                            AS advisor_rank, 
+         advisor.lead                          AS advisor_lead, 
          advisor.departmentid                  AS advisor_dept, 
          stud_user.studentid                   AS student_id, 
          Concat(suser.fname, ' ', suser.lname) AS student, 
@@ -111,7 +116,7 @@ AS
          Concat(auser.fname, ' ', auser.lname) AS advisor, 
          auser.phone                           AS advisor_phone, 
          auser.email                           AS advisor_email, 
-         auser.rank                            AS advisor_rank, 
+         advisor.lead                          AS advisor_lead, 
          advisor.departmentid                  AS advisor_dept, 
          Concat(appt.fname, ' ', appt.lname)   AS student, 
          appt.email                            AS student_email, 
@@ -136,7 +141,7 @@ CREATE VIEW any_appointment AS
         advisor, 
         advisor_phone, 
         advisor_email, 
-        advisor_rank, 
+        advisor_lead, 
         advisor_dept, 
         student_id, 
         student, 
@@ -154,7 +159,7 @@ CREATE VIEW any_appointment AS
         advisor,
         advisor_phone, 
         advisor_email, 
-        advisor_rank, 
+        advisor_lead, 
         advisor_dept, 
         NULL,
         student, 
@@ -177,7 +182,7 @@ AS
          Concat(user.fname, ' ', user.lname) AS advisor_name, 
          user.email AS advisor_email, 
          user.phone AS advisor_phone, 
-         user.rank AS advisor_rank, 
+         advisor.lead AS advisor_lead, 
          slot.starttime AS time 
   FROM   slot, 
          department, 
@@ -199,7 +204,7 @@ AS
          Concat(user.fname, ' ', user.lname) AS advisor_name, 
          user.email AS advisor_email, 
          user.phone AS advisor_phone, 
-         user.rank AS advisor_rank, 
+         advisor.lead AS advisor_lead, 
          slot.starttime AS time 
   FROM   slot, 
          department, 
@@ -223,77 +228,29 @@ CREATE VIEW future_slot AS
         unavailable_slot
     ORDER BY time; 
 
--- procedures
-
-DELIMITER $$
-
-CREATE PROCEDURE create_advisor (
-    IN email VARCHAR(85),
-    IN password CHAR(64),
-    IN fname VARCHAR(35) CHARSET utf8,
-    IN lname VARCHAR(35) CHARSET utf8,
-    IN phone CHAR(10),
-    IN departmentid INT,
-    IN leadrole INT
-)
-BEGIN
-    DECLARE userid INT;
-
-    IF leadrole != 0 THEN
-      SET leadrole = 1;
-    END IF;
-
-    IF (
-        NULLIF(email, '') IS NULL
-     OR NULLIF(password, '') IS NULL
-     OR NULLIF(fname, '') IS NULL
-     OR NULLIF(lname, '') IS NULL
-    ) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'NOT NULL parameter is NULL';
-    END IF;
-
-    IF NOT EXISTS (
-        SELECT DISTINCT id
-        FROM department
-        WHERE id = departmentid
-    ) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Tried to create an advisor with an unknown department.';
-    END IF;
-
-    INSERT INTO user(email, password, fname, lname, phone, rank) VALUES(email, password, fname, lname, phone, leadrole + 1);
-    SET userid = LAST_INSERT_ID();
-    INSERT INTO advisor(userid, departmentid) VALUES(userid, departmentid);
-END $$
-
-CREATE PROCEDURE create_student (
-    IN email VARCHAR(85),
-    IN password CHAR(64),
-    IN fname VARCHAR(35) CHARSET utf8,
-    IN lname VARCHAR(35) CHARSET utf8,
-    IN phone CHAR(10),
-    IN utastudentid CHAR(10),
-    IN major VARCHAR(30)
-)
-BEGIN
-    DECLARE userid INT;
-
-    IF (
-        NULLIF(email, '') IS NULL
-     OR NULLIF(password, '') IS NULL
-     OR NULLIF(utastudentid, '') IS NULL
-     OR NULLIF(fname, '') IS NULL
-     OR NULLIF(lname, '') IS NULL
-     OR NULLIF(major, '') IS NULL
-    ) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'NOT NULL parameter is NULL';
-    END IF;
-
-    INSERT INTO user(email, password, fname, lname, phone, rank) VALUES(email, password, fname, lname, phone, 0);
-    SET userid = LAST_INSERT_ID();
-    INSERT INTO student_user(userid, utastudentid, major) VALUES(userid, utastudentid, major);
-END $$
-
-DELIMITER ;
+CREATE VIEW ranked_user AS
+    SELECT 
+        user.id,
+        user.email,
+        user.fname,
+        user.lname,
+        user.phone,
+        CASE
+            WHEN admin.userid IS NOT NULL THEN 4
+            ELSE (CASE
+                WHEN advisor.lead = 0 THEN 2
+                ELSE (CASE
+                    WHEN advisor.lead = 1 THEN 3
+                    ELSE (CASE
+                        WHEN user.email LIKE '%@uta.edu' THEN 1
+                        ELSE 0
+                    END)
+                END)
+            END)
+        END AS rank
+    FROM
+        user AS user
+            LEFT JOIN
+        advisor ON advisor.userid = user.id
+            LEFT JOIN
+        admin ON admin.userid = user.id;

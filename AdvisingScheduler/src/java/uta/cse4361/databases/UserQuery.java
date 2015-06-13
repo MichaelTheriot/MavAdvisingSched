@@ -7,15 +7,13 @@ import uta.cse4361.businessobjects.User;
  *
  * @author Michael Theriot
  */
-public class LoginQuery extends RDBImplCommand {
+public class UserQuery extends RDBImplCommand {
 
     private String email;
-    private String password;
     
-    public LoginQuery(String email, String password) {
-        this.sqlQuery = "SELECT DISTINCT COUNT(*) AS NUM, id, fname, lname, email, phone, rank FROM user WHERE email = ? AND password = ?";
+    public UserQuery(String email) {
+        this.sqlQuery = "SELECT DISTINCT COUNT(*) AS NUM, id, fname, lname, email, phone, rank FROM ranked_user WHERE email = ?";
         this.email = email;
-        this.password = password;
     }
     
     @Override
@@ -28,7 +26,6 @@ public class LoginQuery extends RDBImplCommand {
     public void prepareStatement() throws SQLException {
         statement = conn.prepareStatement(sqlQuery);
         statement.setString(1, email);
-        statement.setString(2, password);
     }
 
     public void processResult() throws SQLException {

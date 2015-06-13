@@ -1,7 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="major" value="${(not empty sessionScope.major) ? sessionScope.major : param.major}" />
+<c:set var="major" value="${(not empty sessionScope.student) ? sessionScope.student.getMajor() : param.major}" />
 <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
     <input type="hidden" name="dept" value="${param.dept}" />
     <input type="hidden" name="major" value="${major}" />
@@ -10,7 +10,7 @@
         <fieldset>
             <legend>Enter appointment details</legend>
             <ol>
-                <c:if test="${empty sessionScope.studentid}">
+                <c:if test="${empty sessionScope.student}">
                     <li>
                         <t:forminput name="fname" label="First name" type="text" required="true" />
                     </li>

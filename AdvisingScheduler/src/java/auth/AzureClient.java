@@ -25,23 +25,20 @@ public class AzureClient {
     private final String deauthUri;
     private final String redirectUri;
     private String encodedClientId;
-    private String encodedRedirectUri;
 
     public AzureClient(String clientId, String clientSecret, String redirectUri, String logoutUri) { // should be updated to throw encoding errors
         try {
             this.encodedClientId = URLEncoder.encode(clientId, "UTF-8");
-            this.encodedRedirectUri = URLEncoder.encode(redirectUri, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             this.encodedClientId = "";
-            this.encodedRedirectUri = "";
         }
-        this.baseUri = "https://login.windows.net/common/oauth2";
+        this.baseUri = "https://login.microsoftonline.com/common/oauth2";
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.authUri = baseUri + "/authorize"
             + "?response_type=code"
             + "&client_id=" + encodedClientId
-            + "&redirect_uri=" + encodedRedirectUri;
+            + "&redirect_uri=" + redirectUri;
         this.deauthUri = "https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=" + logoutUri;
         this.redirectUri = redirectUri;
     }

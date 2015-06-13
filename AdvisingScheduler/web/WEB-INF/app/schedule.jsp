@@ -6,14 +6,14 @@
 <jsp:useBean id="department" class="uta.cse4361.beans.DepartmentBean"/>
 <jsp:useBean id="slotsbean" class="uta.cse4361.beans.SlotsBean"/>
 <c:choose>
-    <c:when test="${(not empty param.major or not empty sessionScope.major) and not empty param.reason and not empty param.slot and param.confirm == true}">
+    <c:when test="${(not empty param.major or not empty sessionScope.student) and not empty param.reason and not empty param.slot and param.confirm == true}">
         <%@include file="/WEB-INF/app/schedule/submit.jsp" %>
     </c:when>
     <c:otherwise>
 <t:layout>
     <jsp:attribute name="studentorloggedout">
         <c:choose>
-            <c:when test="${empty param.dept or (empty param.major and empty sessionScope.major)}">
+            <c:when test="${empty param.dept or (empty param.major and empty sessionScope.student)}">
                 <%@include file="/WEB-INF/app/schedule/page1.jsp" %>
             </c:when>
             <c:when test="${empty param.slot or not empty param.page}">

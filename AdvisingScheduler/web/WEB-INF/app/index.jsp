@@ -8,6 +8,6 @@
     </jsp:attribute>
     <jsp:attribute name="loggedin">
         <h1>Welcome to the UTA advising scheduling system</h1>
-        <p>You are signed in as ${sessionScope.fname} ${sessionScope.lname}!</p>
+        <p>You are signed in as ${sessionScope.user.getFname()} ${sessionScope.user.getLname()}!</p>
     </jsp:attribute>
 </t:layout>

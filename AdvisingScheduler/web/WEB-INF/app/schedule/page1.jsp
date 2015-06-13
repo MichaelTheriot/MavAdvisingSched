@@ -18,8 +18,8 @@
                 </li>
                 <li>
                     <c:choose>
-                        <c:when test="${not empty sessionScope.major}">
-                            <t:forminput name="major" label="Major" type="text" placeholder="Enter your major" required="true" value="${sessionScope.major}" disabled="true" />
+                        <c:when test="${not empty sessionScope.student.getMajor()}">
+                            <t:forminput name="major" label="Major" type="text" placeholder="Enter your major" required="true" value="${sessionScope.student.getMajor()}" disabled="true" />
                         </c:when>
                         <c:otherwise>
                             <t:forminput name="major" label="Major" type="text" placeholder="Enter your major" required="true" value="${param.major}" />
@@ -33,6 +33,6 @@
 </form>
 <h1>Schedule an Appointment</h1>
 <p>Please use the form to the right to schedule an appointment.</p>
-<c:if test="${empty sessionScope.studentid}">
+<c:if test="${empty sessionScope.student}">
     <p>You are not signed in; you will be asked to provide your email and phone number. Create a student account to remember these details and view scheduled appointments.</p>
 </c:if>

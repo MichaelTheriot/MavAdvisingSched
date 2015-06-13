@@ -26,8 +26,11 @@
     <main>
       <div id="content">
         <c:choose>
+            <c:when test="${(rank == 0 and empty sessionScope.student and ((not empty studentorloggedout) or (not empty student))) or ((rank == 2 or rank == 3) and empty sessionScope.advisor and ((not empty advisororleadadvisor) or (not empty advisor)))}">
+              <c:redirect url="/profile" />
+            </c:when>
             <c:when test="${not empty loggedout and rank < 0}">
-              <jsp:invoke fragment="loggedout" />
+                <jsp:invoke fragment="loggedout" />
             </c:when>
             <c:when test="${not empty loggedin and rank >= 0}">
               <jsp:invoke fragment="loggedin" />
@@ -38,13 +41,13 @@
             <c:when test="${not empty student and rank == 0}">
               <jsp:invoke fragment="student" />
             </c:when>
-            <c:when test="${not empty advisororleadadvisor and rank >= 1 && rank < 3}">
+            <c:when test="${not empty advisororleadadvisor and (rank == 2 or rank == 3)}">
               <jsp:invoke fragment="advisororleadadvisor" />
             </c:when>
-            <c:when test="${not empty leadadvisor and rank == 2}">
+            <c:when test="${not empty leadadvisor and rank == 3}">
               <jsp:invoke fragment="leadadvisor" />
             </c:when>
-            <c:when test="${not empty admin and rank >= 3}">
+            <c:when test="${not empty admin and rank >= 4}">
               <jsp:invoke fragment="admin" />
             </c:when>
             <c:otherwise>

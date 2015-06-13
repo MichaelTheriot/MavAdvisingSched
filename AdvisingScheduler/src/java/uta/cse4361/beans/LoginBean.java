@@ -10,9 +10,10 @@ import auth.AzureUser;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import uta.cse4361.businessobjects.User;
-import uta.cse4361.databases.LoginQuery;
+import uta.cse4361.databases.UserAddQuery;
+import uta.cse4361.databases.UserQuery;
+import uta.cse4361.databases.UserUpdateQuery;
 
 /**
  *
@@ -20,8 +21,7 @@ import uta.cse4361.databases.LoginQuery;
  */
 public class LoginBean {
     private String email;
-    private String password;
-    private final AzureClient az = new AzureClient("", "", "http://bartsimpson.uta.edu:8084/AdvisingSchedulerTeam3/login", "http://bartsimpson.uta.edu:8084/AdvisingSchedulerTeam3/logout");
+    private static final AzureClient az = new AzureClient("", "", "http://bartsimpson.uta.edu:8080/AdvisingSchedulerTeam3/login", "http://bartsimpson.uta.edu:8080/AdvisingSchedulerTeam3/logout");
 
     public LoginBean() {
     }
@@ -34,22 +34,37 @@ public class LoginBean {
         return az.getDeauthUri();
     }
 
-    public User getUser(String code) {
+    public User certifyUser(String code) {
         AzureUser azureUser = az.getUser(code);
         User user = null;
         if(azureUser != null) {
-            boolean universityEmail = Pattern.matches(".*[^\\w]uta\\.edu", azureUser.getEmail());
-            if(universityEmail) {
-                user = new User(0, azureUser.getEmail(), azureUser.getFirstName(), azureUser.getLastName(), "000", 0);
+            UserQuery query = new UserQuery(azureUser.getEmail());
+            query.execute();
+            user = (User) query.getResult();
+            if(user != null) {
+                if(!user.getFname().equals(azureUser.getFirstName())
+                || !user.getLname().equals(azureUser.getLastName())) {
+                    UserUpdateQuery query2 = new UserUpdateQuery(user.getId(), user.getEmail(), azureUser.getFirstName(), azureUser.getLastName(), user.getPhone());
+                    query2.execute();
+                    if((boolean) query2.getResult()) {
+                        user = new User(user.getId(), user.getEmail(), azureUser.getFirstName(), azureUser.getLastName(), user.getPhone(), user.getRank());
+                    }
+                }
             } else {
-                System.out.println("NOT UNI EMAIL");
+                UserAddQuery query3 = new UserAddQuery(azureUser.getEmail(), azureUser.getFirstName(), azureUser.getLastName());
+                query3.execute();
+                if((boolean) query3.getResult()) {
+                    UserQuery query4 = new UserQuery(azureUser.getEmail());
+                    query4.execute();
+                    user = (User) query4.getResult();
+                }
             }
         }
         return user;
     }
 
     public User getUser() {
-        LoginQuery query = new LoginQuery(email, password);
+        UserQuery query = new UserQuery(email);
         query.execute();
         return (User) query.getResult();
     }
@@ -60,13 +75,5 @@ public class LoginBean {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

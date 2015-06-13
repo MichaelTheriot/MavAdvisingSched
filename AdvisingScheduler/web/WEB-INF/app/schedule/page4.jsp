@@ -1,7 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <c:catch var="e"><fmt:parseNumber var="id" type="number" integerOnly="true" value="${param.slot}" /></c:catch><c:if test="${e != null}"><c:redirect url="/schedule" /></c:if>
-<c:set var="major" value="${(not empty sessionScope.major) ? sessionScope.major : param.major}" />
+<c:set var="major" value="${(not empty sessionScope.student) ? sessionScope.student.getMajor() : param.major}" />
 <c:set var="slot" value="${slotsbean.getSlotById(id)}" />
 <c:choose>
     <c:when test="${slot == null or slot.getAvailable() == false}">
@@ -18,14 +18,14 @@
         </form>
     </c:when>
     <c:otherwise>
-        <c:set var="major" value="${(not empty sessionScope.major) ? sessionScope.major : param.major}" />
+        <c:set var="major" value="${(not empty sessionScope.student) ? sessionScope.student.getMajor() : param.major}" />
         <form class="list panel" action="${pageContext.request.contextPath}/schedule" method="POST">
             <input type="hidden" name="dept" value="${param.dept}" />
             <input type="hidden" name="major" value="${major}" />
             <input type="hidden" name="slot" value="${id}" />
             <input type="hidden" name="reason" value="${param.reason}" />
             <input type="hidden" name="desc" value="${param.desc}" />
-            <c:if test="${empty sessionScope.studentid}">
+            <c:if test="${empty sessionScope.student}">
                 <input type="hidden" name="fname" value="${param.fname}" />
                 <input type="hidden" name="lname" value="${param.lname}" />
                 <input type="hidden" name="email" value="${param.email}" />
@@ -37,18 +37,18 @@
                     <legend>Review appointment</legend>
                     <ol>
                         <c:choose>
-                            <c:when test="${not empty sessionScope.studentid}">
+                            <c:when test="${not empty sessionScope.student}">
                                 <li>
-                                    <t:forminput name="fname" label="First name" type="text" value="${sessionScope.fname}" required="true" disabled="true" />
+                                    <t:forminput name="fname" label="First name" type="text" value="${sessionScope.user.getFname()}" required="true" disabled="true" />
                                 </li>
                                 <li>
-                                    <t:forminput name="lname" label="Last name" type="text" value="${sessionScope.lname}" required="true" disabled="true" />
+                                    <t:forminput name="lname" label="Last name" type="text" value="${sessionScope.user.getLname()}" required="true" disabled="true" />
                                 </li>
                                 <li>
-                                    <t:forminput name="email" label="Email" type="email" value="${sessionScope.email}" required="true" disabled="true" />
+                                    <t:forminput name="email" label="Email" type="email" value="${sessionScope.user.getEmail()}" required="true" disabled="true" />
                                 </li>
                                 <li>
-                                    <t:forminput name="phone" label="Phone number" type="text" value="${sessionScope.phone}" required="true" disabled="true" />
+                                    <t:forminput name="phone" label="Phone number" type="text" value="${sessionScope.user.getPhone()}" required="true" disabled="true" />
                                 </li>
                             </c:when>
                             <c:otherwise>

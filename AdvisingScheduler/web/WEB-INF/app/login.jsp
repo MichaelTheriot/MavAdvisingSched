@@ -15,30 +15,22 @@
     <c:otherwise>
         <c:choose>
             <c:when test="${not empty param.code}">
-                <c:set var="user" value="${loginbean.getUser(param.code)}"/>
+                <c:set var="user" value="${loginbean.certifyUser(param.code)}"/>
                 <c:choose>
                     <c:when test="${user != null}">
+                        <c:set var="user" value="${user}" scope="session" />
+                        <c:set var="rank" value="${user.getRank()}" scope="session" />
+                        <c:choose>
+                            <c:when test="${user.getRank() == 0}">
+                                <jsp:setProperty name="studentbean" property="userId" value="${user.getId()}" />
+                                <c:set var="student" value="${studentbean.getStudent()}" scope="session" />
+                            </c:when>
+                            <c:when test="${user.getRank() == 2 or user.getRank() == 3}">
+                                <jsp:setProperty name="advisorbean" property="userId" value="${user.getId()}" />
+                                <c:set var="advisor" value="${advisorbean.getAdvisor()}" scope="session" />
+                            </c:when>
+                        </c:choose>
                         <t:redirect pagetitle="Sign in" url="${pageContext.request.contextPath}/">
-                            <c:set var="user" value="${user}" scope="session" />
-                            <c:set var="id" value="${user.getId()}" scope="session" />
-                            <c:set var="email" value="${user.getEmail()}" scope="session" />
-                            <c:set var="fname" value="${user.getFname()}" scope="session" />
-                            <c:set var="lname" value="${user.getLname()}" scope="session" />
-                            <c:set var="phone" value="${user.getPhone()}" scope="session" />
-                            <c:set var="rank" value="${user.getRank()}" scope="session" />
-                            <c:if test="${user.getRank() == 0}">
-                                <jsp:setProperty name="studentbean" property="userId" value='${user.getId()}' />
-                                <c:set var="student" value="${studentbean.getStudent()}" />
-                                <c:set var="studentid" value="${student.getStudentId()}" scope="session" />
-                                <c:set var="utastudentid" value="${student.getUtaStudentId()}" scope="session" />
-                                <c:set var="major" value="${student.getMajor()}" scope="session" />
-                            </c:if>
-                            <c:if test="${user.getRank() == 1 or user.getRank() == 2}">
-                                <jsp:setProperty name="advisorbean" property="userId" value='${user.getId()}' />
-                                <c:set var="advisor" value="${advisorbean.getAdvisor()}" />
-                                <c:set var="advisorid" value="${advisor.getAdvisorId()}" scope="session" />
-                                <c:set var="dept" value="${advisor.getDept()}" scope="session" />
-                            </c:if>
                             You have signed in successfully!
                         </t:redirect>
                     </c:when>

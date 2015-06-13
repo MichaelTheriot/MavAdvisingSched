@@ -8,15 +8,15 @@
     <c:when test="${rank >= 0 and not empty param.id and not empty param.cancel and param.cancel == true}">
         <c:choose>
             <c:when test="${rank == 0}">
-                <c:set var="success" value="${appointmentbean.cancelAppointmentStudent(param.id, sessionScope.studentid)}" />
-            </c:when>
-            <c:when test="${rank == 1}">
-                <c:set var="success" value="${appointmentbean.cancelAppointmentAdvisor(param.id, sessionScope.advisorid)}" />
+                <c:set var="success" value="${appointmentbean.cancelAppointmentStudent(param.id, sessionScope.student.getStudentId())}" />
             </c:when>
             <c:when test="${rank == 2}">
-                <c:set var="success" value="${appointmentbean.cancelAppointmentDepartment(param.id, sessionScope.dept)}" />
+                <c:set var="success" value="${appointmentbean.cancelAppointmentAdvisor(param.id, sessionScope.advisor.getStudentId())}" />
             </c:when>
-            <c:when test="${rank >= 3}">
+            <c:when test="${rank == 3}">
+                <c:set var="success" value="${appointmentbean.cancelAppointmentDepartment(param.id, sessionScope.advisor.getDept())}" />
+            </c:when>
+            <c:when test="${rank >= 4}">
                 <c:set var="success" value="${appointmentbean.cancelAppointment(param.id)}" />
             </c:when>
         </c:choose>
@@ -40,7 +40,7 @@
             <tbody>
                 <tr>
                     <th>Time</th>
-                    <c:if test="${rank != 1}">
+                    <c:if test="${rank != 2}">
                         <th colspan="3">Advisor</th>
                     </c:if>
                     <c:if test="${rank != 0}">
@@ -51,24 +51,24 @@
                     <th>Options</th>
                 </tr>
                 <c:choose>
-                    <c:when test="${sessionScope.rank >= 3}">
+                    <c:when test="${sessionScope.rank >= 4}">
                         <c:set var="appts" value="${appointmentbean.getAppointments()}" />
                     </c:when>
+                    <c:when test="${sessionScope.rank == 3}">
+                        <c:set var="appts" value="${appointmentbean.getAppointmentsByDeptId(sessionScope.advisor.getDept())}" />
+                    </c:when>
                     <c:when test="${sessionScope.rank == 2}">
-                        <c:set var="appts" value="${appointmentbean.getAppointmentsByDeptId(sessionScope.dept)}" />
+                        <c:set var="appts" value="${appointmentbean.getAppointmentsByAdvisorId(sessionScope.advisor.getId())}" />
                     </c:when>
-                    <c:when test="${sessionScope.rank == 1}">
-                        <c:set var="appts" value="${appointmentbean.getAppointmentsByAdvisorId(sessionScope.advisorid)}" />
+                    <c:when test="${sessionScope.rank == 0}">
+                        <c:set var="appts" value="${appointmentbean.getAppointmentsByStudentId(sessionScope.student.getId())}" />
                     </c:when>
-                    <c:otherwise>
-                        <c:set var="appts" value="${appointmentbean.getAppointmentsByStudentId(sessionScope.studentid)}" />
-                    </c:otherwise>
                 </c:choose>
                 <c:if test="${fn:length(appts) > 0}">
                     <c:forEach var="i" begin="0" end="${fn:length(appts) - 1}">
                         <tr>
                             <td>${appts[i].getTimestamp("M/d/y  h:mm a")}</td>
-                            <c:if test="${rank != 1}">
+                            <c:if test="${rank != 2}">
                                 <td>${appts[i].getAdvisor()}</td>
                                 <td>${appts[i].getAdvisorEmail()}</td>
                                 <td>${appts[i].getAdvisorPhone()}</td>
